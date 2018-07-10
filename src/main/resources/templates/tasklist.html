@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tasket - Task List</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <h1>Tasklist</h1>
+    <p th:text="'This is is the task list'" />
+    <ul th:if="${tasks != null}">
+        <li th:each="task : ${tasks}" th:text="${task.getTitle()}"></li>
+    </ul>
+</body>
+</html>
