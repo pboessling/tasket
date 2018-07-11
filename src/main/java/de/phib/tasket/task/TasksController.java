@@ -58,6 +58,8 @@ public class TasksController {
     @GetMapping("/tasks/add")
     public String addTask(Model model) {
         model.addAttribute("task", new Task());
+        model.addAttribute("allTaskStatus", TaskStatus.values());
+
         return "editTask";
     }
 
@@ -71,6 +73,7 @@ public class TasksController {
     @GetMapping(path = "/tasks/edit/{id}")
     public String editTask(Model model, @PathVariable(value = "id") String id) {
         model.addAttribute("task", taskRepository.findById(id));
+        model.addAttribute("allTaskStatus", TaskStatus.values());
         return "editTask";
     }
 

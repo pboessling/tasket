@@ -2,6 +2,7 @@ package de.phib.tasket;
 
 import de.phib.tasket.task.Task;
 import de.phib.tasket.task.TaskRepository;
+import de.phib.tasket.task.TaskStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -35,11 +36,11 @@ public class TasketApplication {
     @Bean
     public CommandLineRunner generateTestData(TaskRepository repository) {
         return (args) -> {
-            repository.save(new Task("Go shopping"));
-            repository.save(new Task("Clean appartment"));
-            repository.save(new Task("Do dishes"));
-            repository.save(new Task("Read book"));
-            repository.save(new Task("Play with cat"));
+            repository.save(new Task("Go shopping", TaskStatus.TODO));
+            repository.save(new Task("Clean appartment", TaskStatus.TODO));
+            repository.save(new Task("Do dishes", TaskStatus.TODO));
+            repository.save(new Task("Read book", TaskStatus.TODO));
+            repository.save(new Task("Play with cat", TaskStatus.TODO));
         };
     }
 

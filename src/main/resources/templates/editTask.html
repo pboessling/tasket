@@ -10,6 +10,11 @@
 <form th:object="${task}" th:action="@{/tasks}" method="post">
     <input type="hidden" th:field="*{id}"/>
     <input type="text" th:field="*{title}"/>
+    <select th:field="*{status}">
+        <option th:each="status : ${allTaskStatus}"
+                th:value="${status}"
+                th:text="#{${'task.status.' + status}}"></option>
+    </select>
     <button type="submit">Save</button>
 </form>
 </body>

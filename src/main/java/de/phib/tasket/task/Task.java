@@ -3,10 +3,7 @@ package de.phib.tasket.task;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * A task.
@@ -21,6 +18,9 @@ public class Task {
 
     private String title;
 
+    @Enumerated(EnumType.ORDINAL)
+    private TaskStatus status;
+
     /**
      * Creates a new Task.
      */
@@ -31,9 +31,11 @@ public class Task {
      * Creates a new Task.
      *
      * @param title the title of the task
+     * @param status the status of the task
      */
-    public Task(String title) {
+    public Task(String title, TaskStatus status) {
         this.title = title;
+        this.status = status;
     }
 
     /**
@@ -74,6 +76,24 @@ public class Task {
     }
 
     /**
+     * Retuns the status of the task.
+     *
+     * @return the status of the task
+     */
+    public TaskStatus getStatus() {
+        return status;
+    }
+
+    /**
+     * Sets the status of the task
+     *
+     * @param status the status to set
+     */
+    public void setStatus(TaskStatus status) {
+        this.status = status;
+    }
+
+    /**
      * Returns the task as String.
      *
      * @return the task as String
@@ -82,6 +102,7 @@ public class Task {
         return new ToStringBuilder(this)
                 .append("id", id)
                 .append("title", title)
+                .append("status", status)
                 .toString();
     }
 

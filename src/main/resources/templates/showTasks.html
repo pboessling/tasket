@@ -5,14 +5,21 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<h1>Tasks</h1>
+<h1 th:text="#{showtasks.title}"></h1>
 <p th:text="'This is is the task list'"></p>
 <p>
     <a th:href="@{/tasks/add}">Add task</a>
 </p>
 <table>
+    <tr>
+        <td>Title</td>
+        <td>Status</td>
+        <td></td>
+        <td></td>
+    </tr>
     <tr th:each="task : ${tasks}">
         <td th:text="${task.title}"></td>
+        <td th:text="#{${'task.status.' + task.status}}"></td>
         <td><a th:href="${'/tasks/edit/' + task.id}">Edit</a></td>
         <td><a th:href="${'/tasks/delete/' + task.id}">Delete</a></td>
     </tr>
