@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tasket - Edit Task</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>Tasks</h1>
+<p>Add a new task</p>
+<form th:object="${task}" th:action="@{/tasks}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <input type="text" th:field="*{title}"/>
+    <button type="submit">Save</button>
+</form>
+</body>
+</html>
