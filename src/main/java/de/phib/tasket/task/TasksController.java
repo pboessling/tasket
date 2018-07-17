@@ -33,7 +33,12 @@ public class TasksController {
      */
     @GetMapping("/tasks")
     public String getAllTasks(Model model) {
+        Iterable<Task> tasks = taskRepository.findAll();
+        TaskBoard taskBoard = new TaskBoard(tasks);
+
         model.addAttribute("tasks", taskRepository.findAll());
+        model.addAttribute("taskBoard", taskBoard);
+
         return "showTasks";
     }
 
@@ -44,7 +49,7 @@ public class TasksController {
      * @return the name of the template to be rendered
      */
     @PostMapping(path = "/tasks")
-    public String saveProduct(Task task) {
+    public String saveTask(Task task) {
         taskRepository.save(task);
         return "redirect:/tasks";
     }
@@ -60,7 +65,7 @@ public class TasksController {
         model.addAttribute("task", new Task());
         model.addAttribute("allTaskStatus", TaskStatus.values());
 
-        return "editTask";
+        return "addTask";
     }
 
     /**
