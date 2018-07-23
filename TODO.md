@@ -32,6 +32,10 @@
     - https://spring.io/guides/gs/accessing-data-jpa/
     - https://github.com/neocorp/spring-mvc-thymeleaf-crud
     - https://progressive-code.com/post/10/Simple-Spring-Boot-CRUD-application-with-Thymeleaf,-JPA-and-Bootstrap
+    - https://blog.codecentric.de/en/2018/04/spring-boot-vuejs/
+    - https://github.com/jonashackt/spring-boot-vuejs
+    - https://randyyaj.github.io/post/20161129_vue_spring/
+    - https://github.com/digital-bauhaus/Ferienpass-Admin
 - Rank
     - https://stackoverflow.com/questions/9536262/best-representation-of-an-ordered-list-in-a-database
     - https://confluence.atlassian.com/jirakb/lexorank-management-779159218.html

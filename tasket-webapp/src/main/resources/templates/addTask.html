@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tasket - Add Task</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" th:href="@{/css/app.css}" href="../static/css/app.css"/>
+</head>
+<body>
+<h1 th:text="#{addtask.title}"></h1>
+<p>
+    <a th:href="@{/tasks}" th:text="#{link.backtotaskboard}"></a>
+</p>
+<form th:object="${task}" th:action="@{/tasks}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <input type="text" th:field="*{title}"/>
+    <select th:field="*{status}">
+        <option th:each="status : ${allTaskStatus}"
+                th:value="${status}"
+                th:text="#{${'task.status.' + status}}"></option>
+    </select>
+    <button type="submit" th:text="#{button.save}"></button>
+</form>
+</body>
+</html>
