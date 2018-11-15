@@ -1,5 +1,6 @@
 package de.phib.tasket.task;
 
+import de.phib.tasket.InfoAppProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,14 +16,17 @@ public class TasksController {
 
     private TaskRepository taskRepository;
 
+    private String appVersion;
+
     /**
      * Creates a new TaskController.
      *
      * @param taskRepository a TaskRepository
      */
     @Autowired
-    public TasksController(TaskRepository taskRepository) {
+    public TasksController(TaskRepository taskRepository, InfoAppProperties infoAppProperties) {
         this.taskRepository = taskRepository;
+        this.appVersion = infoAppProperties.getVersion();
     }
 
     /**
@@ -38,6 +42,7 @@ public class TasksController {
 
         model.addAttribute("tasks", taskRepository.findAll());
         model.addAttribute("taskBoard", taskBoard);
+        model.addAttribute("appVersion", this.appVersion);
 
         return "showTasks";
     }

@@ -3,70 +3,117 @@
 <head>
     <title th:text="#{html.title.prefix} + ' - ' +  #{showtasks.title}"></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/bulma.min.css}" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/app.css}" href="../static/css/app.css"/>
 </head>
 <body>
-<h1 th:text="#{showtasks.title}"></h1>
-<p>
-    <a th:href="@{/tasks/add}" th:text="#{link.addtask}"></a>
-</p>
-<table>
-    <!--<tr>
-        <td>Title</td>
-        <td>Status</td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr th:each="task : ${tasks}">
-        <td th:text="${task.title}"></td>
-        <td th:text="#{${'task.status.' + task.status}}"></td>
-        <td><a th:href="${'/tasks/edit/' + task.id}">Edit</a></td>
-        <td><a th:href="${'/tasks/delete/' + task.id}">Delete</a></td>
-    </tr>-->
-    <tr>
-        <th>To Do</th>
-        <th>Planned</th>
-        <th>Selected</th>
-        <th>Done</th>
-    </tr>
-    <tr>
-        <td>
-            <ul th:each="task : ${taskBoard.getTasksTodo()}">
-                <li>
-                    <span th:text="${task.title}"></span>
-                    <a th:href="${'/tasks/edit/' + task.id}" th:text="#{link.edittask}">Edit</a>
-                    <a th:href="${'/tasks/delete/' + task.id}" th:text="#{link.deletetask}">Delete</a>
-                </li>
-            </ul>
-        </td>
-        <td>
-            <ul th:each="task : ${taskBoard.getTasksPlanned()}">
-                <li>
-                    <span th:text="${task.title}"></span>
-                    <a th:href="${'/tasks/edit/' + task.id}" th:text="#{link.edittask}">Edit</a>
-                    <a th:href="${'/tasks/delete/' + task.id}" th:text="#{link.deletetask}">Delete</a>
-                </li>
-            </ul>
-        </td>
-        <td>
-            <ul th:each="task : ${taskBoard.getTasksSelected()}">
-                <li>
-                    <span th:text="${task.title}"></span>
-                    <a th:href="${'/tasks/edit/' + task.id}" th:text="#{link.edittask}">Edit</a>
-                    <a th:href="${'/tasks/delete/' + task.id}" th:text="#{link.deletetask}">Delete</a>
-                </li>
-            </ul>
-        </td>
-        <td>
-            <ul th:each="task : ${taskBoard.getTasksDone()}">
-                <li>
-                    <span th:text="${task.title}"></span>
-                    <a th:href="${'/tasks/edit/' + task.id}" th:text="#{link.edittask}">Edit</a>
-                    <a th:href="${'/tasks/delete/' + task.id}" th:text="#{link.deletetask}">Delete</a>
-                </li>
-            </ul>
-        </td>
-    </tr>
-</table>
+<nav id="navbar" class="navbar has-shadow is-spaced">
+    <div class="container">
+        <div class="navbar-brand">
+            <p class="navbar-item"><strong>Tasket</strong></p>
+            <div id="navbarBurger" class="navbar-burger burger" data-target="navMenuIndex">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div id="navMenuIndex" class="navbar-menu">
+            <div class="navbar-start">
+                <p class="navbar-item control">
+                    <a th:href="@{/tasks/}">Taskboard</a>
+                </p>
+            </div>
+            <div class="navbar-end">
+            </div>
+        </div>
+    </div>
+</nav>
+<main>
+    <section class="section">
+        <div class="container">
+            <h1 class="title" th:text="#{showtasks.title}"></h1>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <p class="control">
+                <a class="button" th:href="@{/tasks/add}" th:text="#{link.addtask}"></a>
+            </p>
+            <table class="table is-bordered is-striped is-fullwidth">
+                <!--<tr>
+                    <td>Title</td>
+                    <td>Status</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr th:each="task : ${tasks}">
+                    <td th:text="${task.title}"></td>
+                    <td th:text="#{${'task.status.' + task.status}}"></td>
+                    <td><a th:href="${'/tasks/edit/' + task.id}">Edit</a></td>
+                    <td><a th:href="${'/tasks/delete/' + task.id}">Delete</a></td>
+                </tr>-->
+                <tr>
+                    <th>To Do</th>
+                    <th>Planned</th>
+                    <th>Selected</th>
+                    <th>Done</th>
+                </tr>
+                <tr>
+                    <td>
+                        <ul th:each="task : ${taskBoard.getTasksTodo()}">
+                            <li>
+                                <span th:text="${task.title}"></span>
+                                <a th:href="${'/tasks/edit/' + task.id}" th:text="#{link.edittask}">Edit</a>
+                                <a th:href="${'/tasks/delete/' + task.id}" th:text="#{link.deletetask}">Delete</a>
+                            </li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul th:each="task : ${taskBoard.getTasksPlanned()}">
+                            <li>
+                                <span th:text="${task.title}"></span>
+                                <a th:href="${'/tasks/edit/' + task.id}" th:text="#{link.edittask}">Edit</a>
+                                <a th:href="${'/tasks/delete/' + task.id}" th:text="#{link.deletetask}">Delete</a>
+                            </li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul th:each="task : ${taskBoard.getTasksSelected()}">
+                            <li>
+                                <span th:text="${task.title}"></span>
+                                <a th:href="${'/tasks/edit/' + task.id}" th:text="#{link.edittask}">Edit</a>
+                                <a th:href="${'/tasks/delete/' + task.id}" th:text="#{link.deletetask}">Delete</a>
+                            </li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul th:each="task : ${taskBoard.getTasksDone()}">
+                            <li>
+                                <span th:text="${task.title}"></span>
+                                <a th:href="${'/tasks/edit/' + task.id}" th:text="#{link.edittask}">Edit</a>
+                                <a th:href="${'/tasks/delete/' + task.id}" th:text="#{link.deletetask}">Delete</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </section>
+</main>
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>
+            <strong>Tasket</strong> <span th:text="'v' + ${appVersion}">v1.0-SNAPSHOT</span> - This project is
+            maintained by <a href="https://github.com/pboessling/">Philippe B&ouml;&szlig;ling</a>.
+        </p>
+    </div>
+</footer>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    /*]]>*/
+</script>
+<script th:src="@{/js/main.js}"></script>
 </body>
 </html>
