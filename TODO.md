@@ -1,6 +1,9 @@
 # TODO
 
 ## Planned Improvements
+- Implement drag and drop functionality.
+    - https://neliosoftware.com/blog/native-drag-and-drop-with-html5/
+    - https://codepen.io/bradtraversy/pen/odmVgN
 - Implement columns per status (kanban board). 
     1. backlog, to-do, in-progress, done
     2. todo -> backlog/someday, planned -> today, selected/in progress -> pomodoro cycle, done
