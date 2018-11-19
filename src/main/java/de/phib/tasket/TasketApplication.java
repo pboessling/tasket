@@ -37,7 +37,7 @@ public class TasketApplication {
     public CommandLineRunner generateTestData(TaskRepository repository) {
         return (args) -> {
             repository.save(new Task("Go shopping", TaskStatus.TODO));
-            repository.save(new Task("Clean appartment", TaskStatus.TODO));
+            repository.save(new Task("Clean apartment", TaskStatus.TODO));
             repository.save(new Task("Do dishes", TaskStatus.TODO));
             repository.save(new Task("Read book", TaskStatus.TODO));
             repository.save(new Task("Play with cat", TaskStatus.TODO));

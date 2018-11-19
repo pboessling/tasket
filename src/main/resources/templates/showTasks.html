@@ -37,9 +37,6 @@
     </section>
     <section class="section">
         <div class="container">
-            <p class="control">
-                <a class="button" th:href="@{/tasks/add}" th:text="#{link.addtask}"></a>
-            </p>
             <table class="table is-bordered is-striped is-fullwidth">
                 <tr>
                     <th width="25%">To Do</th>
@@ -48,41 +45,17 @@
                     <th width="25%">Done</th>
                 </tr>
                 <tr>
-                    <td class="drop-zone">
-                        <th:block th:each="task : ${taskBoard.getTasksTodo()}">
+                    <td class="drop-zone" th:each="status : ${taskStatus}">
+                        <th:block th:each="task : ${taskBoard.getTasksByStatus(status)}">
                             <div class="task notification box is-white">
                                 <a class="delete" th:href="${'/tasks/delete/' + task.id}"></a>
                                 <span th:text="${task.title}"></span>
                                 [<a th:href="${'/tasks/edit/' + task.id}" th:text="#{link.edittask}">Edit</a>]
                             </div>
                         </th:block>
-                    </td>
-                    <td class="drop-zone">
-                        <th:block th:each="task : ${taskBoard.getTasksPlanned()}">
-                            <div class="task notification box is-white">
-                                <a class="delete" th:href="${'/tasks/delete/' + task.id}"></a>
-                                <span th:text="${task.title}"></span>
-                                [<a th:href="${'/tasks/edit/' + task.id}" th:text="#{link.edittask}">Edit</a>]
-                            </div>
-                        </th:block>
-                    </td>
-                    <td class="drop-zone">
-                        <th:block th:each="task : ${taskBoard.getTasksSelected()}">
-                            <div class="task notification box is-white">
-                                <a class="delete" th:href="${'/tasks/delete/' + task.id}"></a>
-                                <span th:text="${task.title}"></span>
-                                [<a th:href="${'/tasks/edit/' + task.id}" th:text="#{link.edittask}">Edit</a>]
-                            </div>
-                        </th:block>
-                    </td>
-                    <td class="drop-zone">
-                        <th:block th:each="task : ${taskBoard.getTasksDone()}">
-                            <div class="task notification box is-white">
-                                <a class="delete" th:href="${'/tasks/delete/' + task.id}"></a>
-                                <span th:text="${task.title}"></span>
-                                [<a th:href="${'/tasks/edit/' + task.id}" th:text="#{link.edittask}">Edit</a>]
-                            </div>
-                        </th:block>
+                        <div>
+                            <a class="button" style="width: 100%" th:href="@{/tasks/add}" th:text="#{link.addtask}"></a>
+                        </div>
                     </td>
                 </tr>
             </table>

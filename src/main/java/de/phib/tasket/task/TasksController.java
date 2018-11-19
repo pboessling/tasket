@@ -40,8 +40,8 @@ public class TasksController {
         Iterable<Task> tasks = taskRepository.findAll();
         TaskBoard taskBoard = new TaskBoard(tasks);
 
-        model.addAttribute("tasks", taskRepository.findAll());
         model.addAttribute("taskBoard", taskBoard);
+        model.addAttribute("taskStatus", TaskStatus.values());
         model.addAttribute("appVersion", this.appVersion);
 
         return "showTasks";
