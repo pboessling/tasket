@@ -39,10 +39,7 @@
         <div class="container">
             <table class="table is-bordered is-striped is-fullwidth">
                 <tr>
-                    <th width="25%">To Do</th>
-                    <th width="25%">Planned</th>
-                    <th width="25%">Selected</th>
-                    <th width="25%">Done</th>
+                    <th width="25%" th:each="status : ${taskStatus}" th:text="#{'task.status.' + ${status}}"></th>
                 </tr>
                 <tr>
                     <td class="drop-zone" th:each="status : ${taskStatus}">
