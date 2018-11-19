@@ -12,7 +12,7 @@ var APP = APP || (function () {
                 task.ondragstart = function (event) {
                     event.dataTransfer.effectAllowed = 'move';
                     event.dataTransfer.setData('text/html', this.innerHTML);
-                    currentlyDragging = event.target;
+                    currentlyDragging = task;
                 }
             });
 
