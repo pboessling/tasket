@@ -1,10 +1,10 @@
 # TODO
 
 ## Planned Improvements
-- Persist task status in the backend, when changing the status in the frontend.
 - Implement columns per status (kanban board). 
     1. backlog, to-do, in-progress, done
     2. todo -> backlog/someday, planned -> today, selected/in progress -> pomodoro cycle, done
+- Implement labels.
 - Implement rank attribute for tasks.
 - Implement creationDate for tasks.
 - Implement functionality to reorder rank of tasks.

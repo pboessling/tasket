@@ -42,9 +42,9 @@
                     <th width="25%" th:each="status : ${taskStatus}" th:text="#{'task.status.' + ${status}}"></th>
                 </tr>
                 <tr>
-                    <td class="drop-zone" th:each="status : ${taskStatus}">
+                    <td class="drop-zone" th:attr="data-task-status=${status.name()}" th:each="status : ${taskStatus}">
                         <th:block th:each="task : ${taskBoard.getTasksByStatus(status)}">
-                            <div class="task notification box is-white">
+                            <div th:attr="data-task-id=${task.getId()}" class="task notification box is-white">
                                 <a class="delete" th:href="${'/tasks/delete/' + task.id}"></a>
                                 <span th:text="${task.title}"></span>
                                 [<a th:href="${'/tasks/edit/' + task.id}" th:text="#{link.edittask}">Edit</a>]

@@ -1,5 +1,7 @@
 var APP = APP || (function () {
 
+    var tasksApiUrl = '/api/tasks';
+
     return {
         /**
          * Registers the drag & drop of tasks.
@@ -27,14 +29,45 @@ var APP = APP || (function () {
                 };
 
                 column.ondrop = function (event) {
+                    var taskId = currentlyDragging.dataset.taskId;
+                    var title = currentlyDragging.querySelector('span').textContent;
+                    var oldStatus = currentlyDragging.parentNode.dataset.taskStatus;
+                    var newStatus = column.dataset.taskStatus;
+
+                    console.debug('Moved task ' + taskId + ' from status ' + oldStatus + ' to status ' + newStatus);
+
                     currentlyDragging.parentNode.removeChild(currentlyDragging);
                     column.appendChild(currentlyDragging);
                     column.classList.remove('hovering');
                     currentlyDragging = null;
+
+                    var url = tasksApiUrl + '/' + taskId;
+                    var data = {
+                        id: taskId,
+                        title: title,
+                        status: newStatus
+                    };
+
+                    APP.updateBackendTaskStatus(url, data);
                 };
             });
         },
 
+        updateBackendTaskStatus: function (url, data) {
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json; charset=utf-8"
+                },
+                body: JSON.stringify(data)
+            }).then(response => {
+                return response.json();
+            }).then(data => {
+                console.debug(data);
+            }).catch(error => {
+                console.error(error);
+            });
+        },
 
         /**
          * Initializes the application

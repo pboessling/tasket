@@ -76,7 +76,7 @@ public class Task {
     }
 
     /**
-     * Retuns the status of the task.
+     * Returns the status of the task.
      *
      * @return the status of the task
      */

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
  * Controller for displaying, adding, editing, and deleting tasks.
  */
 @Controller
-public class TasksController {
+public class TaskBoardController {
 
     private TaskRepository taskRepository;
 
@@ -24,7 +24,7 @@ public class TasksController {
      * @param taskRepository a TaskRepository
      */
     @Autowired
-    public TasksController(TaskRepository taskRepository, InfoAppProperties infoAppProperties) {
+    public TaskBoardController(TaskRepository taskRepository, InfoAppProperties infoAppProperties) {
         this.taskRepository = taskRepository;
         this.appVersion = infoAppProperties.getVersion();
     }
