@@ -74,9 +74,22 @@ var APP = APP || (function () {
          */
         init: function () {
             APP.registerTaskDragAndDrop();
+            var timer = new Timer(25 * 60, document.querySelector('#timer'));
+            document.querySelector('#timer-start-button').addEventListener('click', function () {
+                timer.start();
+            });
+            document.querySelector('#timer-stop-button').addEventListener('click', function () {
+                timer.stop();
+            });
+            document.querySelector('#timer-reset-button').addEventListener('click', function () {
+                timer.reset();
+            });
         }
     }
 
 })();
 
-APP.init();
+window.onload = function () {
+    APP.init();
+};
+

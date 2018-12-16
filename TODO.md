@@ -1,11 +1,13 @@
 # TODO
 
 ## Planned Improvements
+- Clean up + document timer.js.
+- Implement rank attribute for tasks.
+- Persist rank after drag & drop.
 - Implement columns per status (kanban board). 
     1. backlog, to-do, in-progress, done
     2. todo -> backlog/someday, planned -> today, selected/in progress -> pomodoro cycle, done
 - Implement labels.
-- Implement rank attribute for tasks.
 - Implement creationDate for tasks.
 - Implement functionality to reorder rank of tasks.
 - Implement functionality to change status for tasks.
