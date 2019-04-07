@@ -13,3 +13,14 @@ td {
 
 .drop-zone {
 }
+
+.section {
+    padding: 1.5rem 1.5rem;
+}
+
+@media screen {
+    .container {
+        max-width: 960px;
+        width: 960px;
+    }
+}

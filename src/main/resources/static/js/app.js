@@ -1,3 +1,5 @@
+//import {initSortable}    from './sortable.js';
+
 var APP = APP || (function () {
 
     var tasksApiUrl = '/api/tasks';
@@ -15,6 +17,8 @@ var APP = APP || (function () {
                     event.dataTransfer.effectAllowed = 'move';
                     event.dataTransfer.setData('text/html', this.innerHTML);
                     currentlyDragging = task;
+                    //currentlyDragging.classList.remove('is-white');
+                    //currentlyDragging.classList.add('is-danger');
                 }
             });
 
@@ -74,6 +78,7 @@ var APP = APP || (function () {
          */
         init: function () {
             APP.registerTaskDragAndDrop();
+            //initSortable('.sortable-list');
             var timer = new Timer(25 * 60, document.querySelector('#timer'));
             document.querySelector('#timer-start-button').addEventListener('click', function () {
                 timer.start();
@@ -84,6 +89,10 @@ var APP = APP || (function () {
             document.querySelector('#timer-reset-button').addEventListener('click', function () {
                 timer.reset();
             });
+
+            //init tasklist
+            document.querySelectorAll('.task-list').forEach(element => new TaskList(element));
+            document.querySelectorAll('.task-new').forEach(element => new Task(element));
         }
     }
 
