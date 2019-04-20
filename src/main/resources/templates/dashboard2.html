@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{html.title.prefix} + ' - ' +  #{showtasks.title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<link th:href="@{/css/bulma.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/app.css}" href="../static/css/app.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+          integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">-->
+</head>
+<body>
+<nav>
+    <a href="">Today</a>
+    <a href="">This Week</a>
+    <a href="">This Month</a>
+    <a href="">Calendar</a>
+    <a href="">Collections</a>
+</nav>
+<main>
+    <section>
+        <h1>Monday 08.04.2019</h1>
+    </section>
+    <section>
+        <h2>Events</h2>
+        <ul>
+            <li>09:30-09:45 - GTAI: Daily Standup</li>
+            <li>10:30-10:45 - BSD: Daily Standup</li>
+            <li>11:00-12:30 - DEV1 Weekly</li>
+            <li>12:30-13:30 - Mittagessen mit Tobi</li>
+            <li>14:00-15:00 - DevOps: Ansible</li>
+            <li>16:00 - Dina abholen</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Tasks</h2>
+        <ul>
+            <li th:each="task : ${tasks}">
+                <block th:if="${task.id == editTask.id}">
+                    <form th:object="${editTask}" th:action="@{'/dashboard2/edit/' + task.id}" method="post">
+                        <input type="hidden" th:field="*{id}"/>
+                        <input type="text" th:field="*{title}"/>
+                        <button type="submit" th:text="#{button.add}"></button>
+                    </form>
+                </block>
+                <block th:unless="${task.id == editTask.id}">
+                    <span th:text="${task.title}"></span>
+                    [<a th:href="${'/dashboard2/edit/' + task.id}" th:text="#{link.edittask}">Edit</a>]
+                    [<a th:href="${'/dashboard2/delete/' + task.id}" th:text="#{link.deletetask}">Delete</a>]
+                </block>
+            </li>
+            <li>
+                <form th:object="${addTask}" th:action="@{/dashboard2/add}" method="post">
+                    <input type="hidden" th:field="*{id}"/>
+                    <input type="text" th:field="*{title}"/>
+                    <button type="submit" th:text="#{button.add}"></button>
+                </form>
+            </li>
+        </ul>
+    </section>
+    <section>
+        <h2>Notes</h2>
+        <ul>
+            <li>Lorem ipsum dolor sit amet</li>
+            <li>Lorem ipsum dolor sit amet</li>
+            <li>Lorem ipsum dolor sit amet</li>
+        </ul>
+    </section>
+
+</main>
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>
+            <strong>Tasket</strong> <span th:text="'v' + ${appVersion}">v1.0-SNAPSHOT</span> - This project is
+            maintained by <a href="https://github.com/pboessling/">Philippe B&ouml;&szlig;ling</a>.
+        </p>
+    </div>
+</footer>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    /*]]>*/
+</script>
+<script type="module" th:src="@{/js/sortable.js}"></script>
+<script th:src="@{/js/app.js}"></script>
+<script th:src="@{/js/utils.js}"></script>
+<script th:src="@{/js/timer.js}"></script>
+<script th:src="@{/js/tasklist.js}"></script>
+</body>
+</html>

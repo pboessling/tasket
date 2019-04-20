@@ -1,11 +1,14 @@
-package de.phib.tasket.task;
+package de.phib.tasket.api;
 
+import de.phib.tasket.item.task.Task;
+import de.phib.tasket.item.task.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * Controller for providing a Web API to create, edit, and delete tasks.
  */
+@Deprecated
 @RestController
 @RequestMapping("/api")
 public class ApiTasksController {
@@ -35,7 +38,7 @@ public class ApiTasksController {
     @GetMapping("/tasks/{id}")
     public Task getTask(@PathVariable("id") String id) {
         return this.taskRepository.findById(id)
-                .orElseThrow(() -> new TaskNotFoundException(id));
+                .orElseThrow(() -> new ObjectNotFoundException(id, Task.class));
     }
 
     @PostMapping("/tasks/{id}")

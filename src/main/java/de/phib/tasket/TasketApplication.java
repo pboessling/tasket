@@ -1,15 +1,10 @@
 package de.phib.tasket;
 
-import de.phib.tasket.task.Task;
-import de.phib.tasket.task.TaskRepository;
-import de.phib.tasket.task.TaskStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 import java.io.File;
 
@@ -50,7 +45,8 @@ public class TasketApplication {
      * @param repository the TaskRepository
      * @return a CommandLineRunner
      */
-    @Bean
+    //TODO: Remove, if no longer needed.
+    /*@Bean
     public CommandLineRunner generateTestData(TaskRepository repository) {
         return (args) -> {
             if (this.generateTestData) {
@@ -63,6 +59,6 @@ public class TasketApplication {
                 repository.save(new Task("Play with cat", TaskStatus.TODO));
             }
         };
-    }
+    }*/
 
 }

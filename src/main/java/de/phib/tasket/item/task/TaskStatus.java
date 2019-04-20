@@ -1,4 +1,4 @@
-package de.phib.tasket.task;
+package de.phib.tasket.item.task;
 
 public enum TaskStatus {
 

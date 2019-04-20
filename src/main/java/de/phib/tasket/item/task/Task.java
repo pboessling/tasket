@@ -1,5 +1,7 @@
-package de.phib.tasket.task;
+package de.phib.tasket.item.task;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import de.phib.tasket.collection.Collection;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -18,6 +20,11 @@ public class Task {
 
     private String title;
 
+    @ManyToOne
+    @JoinColumn(name = "collection_id", nullable = false)
+    @JsonBackReference
+    private Collection collection;
+
     @Enumerated(EnumType.ORDINAL)
     private TaskStatus status;
 
@@ -33,6 +40,7 @@ public class Task {
      * @param title the title of the task
      * @param status the status of the task
      */
+    // TODO: In the constructor the status should always be set to TODO.
     public Task(String title, TaskStatus status) {
         this.title = title;
         this.status = status;
@@ -75,6 +83,10 @@ public class Task {
         this.title = title;
     }
 
+    public Collection getCollection() {
+        return this.collection;
+    }
+
     /**
      * Returns the status of the task.
      *
@@ -85,7 +97,7 @@ public class Task {
     }
 
     /**
-     * Sets the status of the task
+     * Sets the status of the task.
      *
      * @param status the status to set
      */

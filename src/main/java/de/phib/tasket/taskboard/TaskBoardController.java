@@ -1,6 +1,9 @@
-package de.phib.tasket.task;
+package de.phib.tasket.taskboard;
 
 import de.phib.tasket.InfoAppProperties;
+import de.phib.tasket.item.task.Task;
+import de.phib.tasket.item.task.TaskRepository;
+import de.phib.tasket.item.task.TaskStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 /**
  * Controller for displaying, adding, editing, and deleting tasks.
  */
+@Deprecated
 @Controller
 public class TaskBoardController {
 

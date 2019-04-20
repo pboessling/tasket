@@ -1,0 +1,229 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{html.title.prefix} + ' - ' +  #{showtasks.title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/bulma.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/app.css}" href="../static/css/app.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+          integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+</head>
+<body>
+<nav id="navbar" class="navbar has-shadow is-spaced">
+    <div class="container">
+        <div class="navbar-brand">
+            <p class="navbar-item"><strong>Tasket</strong></p>
+            <div id="navbarBurger" class="navbar-burger burger" data-target="navMenuIndex">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div id="navMenuIndex" class="navbar-menu">
+            <div class="navbar-start">
+                <p class="navbar-item control">
+                    <a th:href="@{/tasks/}">Today</a>
+                </p>
+                <p class="navbar-item control">
+                    <a th:href="@{/tasks/}">This Week</a>
+                </p>
+                <p class="navbar-item control">
+                    <a th:href="@{/tasks/}">This Month</a>
+                </p>
+                <p class="navbar-item control">
+                    <a th:href="@{/tasks/}">This Year</a>
+                </p>
+                <p class="navbar-item control">
+                    <a th:href="@{/tasks/}">Collections</a>
+                </p>
+            </div>
+            <div class="navbar-end">
+            </div>
+        </div>
+    </div>
+</nav>
+<main>
+    <section class="section">
+        <div class="container">
+            <h1 class="title" th:text="#{dashboard.title}"></h1>
+            <div class="box has-text-centered">
+                <div id="timer" class="is-size-1">25:00</div>
+                <button id="timer-start-button" class="button is-success is-outlined">Start</button>
+                <button id="timer-stop-button" class="button is-danger is-outlined">Stop</button>
+                <button id="timer-reset-button" class="button is-outlined">Reset</button>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="event-list panel">
+                <p class="panel-heading">
+                    <b>Events</b>
+                </p>
+                <th:block th:each="event : ${events}">
+                    <th:block th:if="${event.id == editTask.id}">
+                        <div class="panel-block">
+                            <form th:object="${editTask}" th:action="@{'/dailylog/edit/' + event.id}" method="post">
+                                <input type="hidden" th:field="*{id}"/>
+                                <input type="text" class="input" placeholder="New Task" th:field="*{title}"/>
+                                <button type="submit" class="button" th:text="#{button.add}"></button>
+                            </form>
+                        </div>
+                    </th:block>
+                    <th:block th:unless="${event.id == editTask.id}">
+                        <a class="panel-block task-new">
+                            <span class="panel-icon">
+                                <!--<i class="fas fa-calendar" aria-hidden="true"></i>-->
+                                <i class="fas" aria-hidden="true"
+                                   th:classappend="${event.status.name() == 'DONE'} ? fa-calendar-check : fa-calendar"></i>
+                            </span>
+                            <span th:text="${event.title}"></span>
+                            <div class="column is-paddingless"></div>
+                            <div class="column is-2 is-paddingless">
+                                <div class="buttons has-addons is-pulled-right">
+                                    <button class="item-action button fas fa-check-square"></button>
+                                    <button class="item-action button fas fa-caret-square-right"></button>
+                                    <button class="item-action button fas fa-minus-square"></button>
+                                    <button class="item-action button fas fa-edit"></button>
+                                    <button class="item-action task-delete button fas fa-trash"></button>
+                                </div>
+                            </div>
+                        </a>
+                    </th:block>
+                </th:block>
+                <p class="panel-block">
+                    <button class="task-add button is-fullwidth fas fa-plus "></button>
+                </p>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="task-list panel">
+                <h2 class="panel-heading">
+                    <b>Tasks</b>
+                </h2>
+                <th:block th:each="task : ${tasks}">
+                    <th:block th:if="${task.id == editTask.id}">
+                        <div class="panel-block">
+                            <form th:object="${editTask}" th:action="@{'/dailylog/edit/' + task.id}" method="post">
+                                <input type="hidden" th:field="*{id}"/>
+                                <input type="text" class="input" placeholder="New Task" th:field="*{title}"/>
+                                <button type="submit" class="button" th:text="#{button.add}"></button>
+                            </form>
+                        </div>
+                    </th:block>
+                    <th:block th:unless="${task.id == editTask.id}">
+                        <a class="panel-block task-new">
+                            <span class="panel-icon">
+                                <i class="fas" aria-hidden="true"
+                                   th:classappend="${task.status.name() == 'DONE'} ? fa-check-square : fa-square"></i>
+                            </span>
+                            <span th:text="${task.title}"></span>
+                            <div class="column is-paddingless"></div>
+                            <div class="column is-2 is-paddingless">
+                                <div class="buttons has-addons is-pulled-right">
+                                    <button class="item-action button fas fa-check-square"></button>
+                                    <button class="item-action button fas fa-caret-square-right"></button>
+                                    <button class="item-action button fas fa-minus-square"></button>
+                                    <button class="item-action button fas fa-edit"></button>
+                                    <button class="item-action task-delete button fas fa-trash"></button>
+                                </div>
+                            </div>
+                        </a>
+                    </th:block>
+                </th:block>
+                <p class="panel-block">
+                    <button class="task-add button is-fullwidth fas fa-plus "></button>
+                </p>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="task-list panel">
+                <h2 class="panel-heading">
+                    <b>Notes</b>
+                </h2>
+                <th:block th:each="note : ${notes}">
+                    <th:block th:if="${note.id == editTask.id}">
+                        <div class="panel-block">
+                            <form th:object="${editTask}" th:action="@{'/dailylog/edit/' + note.id}" method="post">
+                                <input type="hidden" th:field="*{id}"/>
+                                <input type="text" class="input" placeholder="New Task" th:field="*{title}"/>
+                                <button type="submit" class="button" th:text="#{button.add}"></button>
+                            </form>
+                        </div>
+                    </th:block>
+                    <th:block th:unless="${note.id == editTask.id}">
+                        <a class="panel-block task-new">
+                            <span class="panel-icon">
+                                <i class="fas fa-file" aria-hidden="true"></i>
+                            </span>
+                            <span th:text="${note.title}"></span>
+                            <div class="column is-paddingless"></div>
+                            <div class="column is-2 is-paddingless">
+                                <div class="buttons has-addons is-pulled-right">
+                                    <button class="item-action button fas fa-check-square"></button>
+                                    <button class="item-action button fas fa-caret-square-right"></button>
+                                    <button class="item-action button fas fa-minus-square"></button>
+                                    <button class="item-action button fas fa-edit"></button>
+                                    <button class="item-action task-delete button fas fa-trash"></button>
+                                </div>
+                            </div>
+                        </a>
+                    </th:block>
+                </th:block>
+                <p class="panel-block">
+                    <button class="task-add button is-fullwidth fas fa-plus"></button>
+                </p>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <table class="table is-bordered is-striped is-fullwidth">
+                <tr>
+                    <th width="25%" th:each="status : ${taskStatus}" th:text="#{'task.status.' + ${status}}"></th>
+                </tr>
+                <tr>
+                    <td class="drop-zone" th:attr="data-task-status=${status.name()}" th:each="status : ${taskStatus}">
+                        <!--<th:block th:each="task : ${taskBoard.getTasksByStatus(status)}">-->
+                        <ul class="sortable-list" th:each="task : ${taskBoard.getTasksByStatus(status)}">
+                            <li th:attr="data-task-id=${task.getId()}" class="task notification box is-grey-lighter">
+                                <a class="delete" th:href="${'/tasks/delete/' + task.id}"></a>
+                                <span th:text="${task.title}"></span>
+                                [<a th:href="${'/tasks/edit/' + task.id}" th:text="#{link.edittask}">Edit</a>]
+                            </li>
+                            <!--</th:block>-->
+                        </ul>
+                        <div>
+                            <a class="button" style="width: 100%" th:href="@{/tasks/add}" th:text="#{link.addtask}"></a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </section>
+</main>
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>
+            <strong>Tasket</strong> <span th:text="'v' + ${appVersion}">v1.0-SNAPSHOT</span> - This project is
+            maintained by <a href="https://github.com/pboessling/">Philippe B&ouml;&szlig;ling</a>.
+        </p>
+    </div>
+</footer>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+
+    /*]]>*/
+</script>
+<script type="module" th:src="@{/js/sortable.js}"></script>
+<script th:src="@{/js/app.js}"></script>
+<script th:src="@{/js/utils.js}"></script>
+<script th:src="@{/js/timer.js}"></script>
+<script th:src="@{/js/tasklist.js}"></script>
+</body>
+</html>

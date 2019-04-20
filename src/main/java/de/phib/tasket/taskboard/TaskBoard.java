@@ -1,10 +1,14 @@
-package de.phib.tasket.task;
+package de.phib.tasket.taskboard;
+
+import de.phib.tasket.item.task.Task;
+import de.phib.tasket.item.task.TaskStatus;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+@Deprecated
 public class TaskBoard {
 
     private Map<TaskStatus, List<Task>> tasks;

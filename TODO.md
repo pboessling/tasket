@@ -1,6 +1,7 @@
 # TODO
 
 ## Planned Improvements
+- Add unique date identifier to collection (later to be extracted to DailyLog class)
 - Clean up + document timer.js.
 - Implement rank attribute for tasks.
 - Persist rank after drag & drop.
@@ -22,6 +23,21 @@
 - Decouple API from Frontend (webapp, api-gateway, backend-service).
 - Implement rate limit for API.
 - Implement integrations (e.g. Jira, Outlook)
+
+## Icons
+- Events
+    - todo: fas fa-calendar
+    - done: fas fa-calendar-check    
+- Tasks
+    - todo: fas fa-square
+    - done: fas fa-check-square
+- Notes
+    - fas fa-file
+- Actions
+    - mark as done: item-action button fas fa-check-square
+    - migrate: item-action button fas fa-caret-square-right
+    - cancel: item-action button fas fa-minus-square
+    - edit: item-action button fas fa-edit
 
 ## Related Products
 - JIRA
