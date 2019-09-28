@@ -5,8 +5,10 @@ import de.phib.tasket.item.event.Event;
 import de.phib.tasket.item.note.Note;
 import de.phib.tasket.item.task.Task;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -18,6 +20,10 @@ public class Collection {
     private String id;
 
     private String title;
+
+    @Column(name = "local_date", columnDefinition = "DATE", unique = true)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate localDate;
 
     @OneToMany(mappedBy = "collection", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JsonManagedReference
@@ -34,10 +40,12 @@ public class Collection {
     public Collection() {
     }
 
-    ;
-
     public Collection(String title) {
         this.title = title;
+    }
+
+    public Collection(LocalDate localDate) {
+        this.localDate = localDate;
     }
 
     public String getId() {
@@ -54,6 +62,14 @@ public class Collection {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public LocalDate getLocalDate() {
+        return localDate;
+    }
+
+    public void setLocalDate(LocalDate localDate) {
+        this.localDate = localDate;
     }
 
     //TODO: Consider defensive copy

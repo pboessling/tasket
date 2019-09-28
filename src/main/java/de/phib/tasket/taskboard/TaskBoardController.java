@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 /**
  * Controller for displaying, adding, editing, and deleting tasks.
  */
+// TODO: Is this class still needed?
 @Deprecated
 @Controller
 public class TaskBoardController {

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<footer th:fragment="footer" class="footer">
+    <div class="content has-text-centered">
+        <p>
+            <strong>Tasket</strong> <span th:text="'v' + ${appVersion}">v1.0-SNAPSHOT</span> - This project is
+            maintained by <a href="https://github.com/pboessling/">Philippe B&ouml;&szlig;ling</a>.
+        </p>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+// TODO: Is this class still needed?
 @Deprecated
 public class TaskBoard {
 

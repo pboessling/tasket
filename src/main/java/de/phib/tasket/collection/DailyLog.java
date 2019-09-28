@@ -6,6 +6,7 @@ import de.phib.tasket.item.task.Task;
 import java.time.LocalDate;
 import java.util.List;
 
+// TODO: Currently not used? Should replace or inherit from Collection?
 public class DailyLog {
 
     private LocalDate localDate;

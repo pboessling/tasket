@@ -28,3 +28,7 @@ td {
         width: 960px;
     }
 }
+
+.with-margin {
+    margin: 1.5rem;
+}

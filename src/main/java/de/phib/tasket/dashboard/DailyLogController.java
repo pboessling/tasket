@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Controller
@@ -41,8 +42,32 @@ public class DailyLogController {
     }
 
     @GetMapping("/dailylog")
-    public String renderDashboard(Model model, @ModelAttribute("editTask") Task editTask) {
-        Optional<Collection> collection = collectionRepository.findById("1");
+    public String renderDailyLog(Model model, @ModelAttribute("editTask") Task editTask) {
+        LocalDate today = LocalDate.now();
+        return this.renderDailyLog(model, editTask, today);
+    }
+
+    @GetMapping("/dailylog/{date}")
+    public String renderDailyLog(Model model, @ModelAttribute("editTask") Task editTask, @PathVariable("date") String date) {
+        LocalDate localDate = LocalDate.parse(date);
+        return renderDailyLog(model, editTask, localDate);
+    }
+
+    private String renderDailyLog(Model model, @ModelAttribute("editTask") Task editTask, LocalDate date) {
+        // TODO: Remove editTask, if not really needed
+        // TODO: Handle invalid date - DateTimeParseException
+        model.addAttribute("appVersion", this.appVersion);
+        model.addAttribute("localDate", date);
+        model.addAttribute("today", LocalDate.now());
+        model.addAttribute("previousDay", date.minusDays(1));
+        model.addAttribute("nextDay", date.plusDays(1));
+
+        Optional<Collection> collection = collectionRepository.findByLocalDate(date);
+
+        if (!collection.isPresent()) {
+            model.addAttribute("dailyLog", new Collection(date));
+            return "dailylog/emptyDailyLog";
+        }
 
         collection.ifPresent(value -> {
             model.addAttribute("events", value.getEvents());
@@ -50,20 +75,21 @@ public class DailyLogController {
             model.addAttribute("notes", value.getNotes());
         });
 
-        // TODO: Delete, if no longer needed.
-        /*Iterable<Task> tasks = taskRepository.findAll();
-        Iterable<Event> events = eventRepository.findAll();
-        Iterable<Note> notes = noteRepository.findAll();
+        // TODO: Remove, if not needed
+        //model.addAttribute("addTask", new Task());
+        model.addAttribute("dailyLog", collection.get());
 
-        model.addAttribute("tasks", tasks);
-        model.addAttribute("events", events);
-        model.addAttribute("notes", notes);*/
-
-        model.addAttribute("addTask", new Task());
-        model.addAttribute("appVersion", this.appVersion);
-
-        return "dailylog";
+        return "dailylog/dailylog";
     }
+
+    @PostMapping(path = "/dailylog")
+    public String createDailyLog(/*@RequestBody*/Collection collection) {
+        // FIXME: Check, if a collection with the given localDate already exists. If yes, then return a 409 error.
+        this.collectionRepository.save(collection);
+        return "redirect:/dailylog/" + collection.getLocalDate();
+    }
+
+    // TODO: Check, if following methods are still neded
 
     @GetMapping("/dashboard2")
     public String renderDashboard2(Model model, @ModelAttribute("editTask") Task editTask) {

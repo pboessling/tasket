@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav th:fragment="navigation" id="navbar" class="navbar has-shadow is-spaced">
+    <div class="container">
+        <div class="navbar-brand">
+            <p class="navbar-item"><strong>Tasket</strong></p>
+            <div id="navbarBurger" class="navbar-burger burger" data-target="navMenuIndex">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div id="navMenuIndex" class="navbar-menu">
+            <div class="navbar-start">
+                <p class="navbar-item control">
+                    <a th:href="@{'/dailylog'}" th:text="#{navigation.dailyLog}">Daily Log</a>
+                </p>
+                <p class="navbar-item control">
+                    <a th:href="@{'/dailylog'}" th:text="#{navigation.weeklyLog}">Weekly Log</a>
+                </p>
+                <p class="navbar-item control">
+                    <a th:href="@{'/dailylog'}" th:text="#{navigation.monthlyLog}">Monthly Log</a>
+                </p>
+                <p class="navbar-item control">
+                    <a th:href="@{'/dailylog'}" th:text="#{navigation.yearlyLog}">Yearly Log</a>
+                </p>
+                <p class="navbar-item control">
+                    <a th:href="@{'/dailylog'}" th:text="#{navigation.collections}">Collections</a>
+                </p>
+            </div>
+            <div class="navbar-end">
+            </div>
+        </div>
+    </div>
+</nav>
+</body>
+</html>

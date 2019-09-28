@@ -4,8 +4,10 @@ import de.phib.tasket.item.event.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
+// TODO: Is this Controller still needed?
 @RestController
 @RequestMapping("/api/collections")
 public class CollectionController {
@@ -32,6 +34,14 @@ public class CollectionController {
     @GetMapping("/{id}")
     public Collection getCollection(@PathVariable("id") String id) {
         return this.collectionService.getCollection(id);
+    }
+
+    @GetMapping("/byDate/{date}")
+    public Collection getCollectionByDate(@PathVariable("date") String date) {
+        // TODO: Handle invalid date - DateTimeParseException - 400 bad request
+        // TODO: Handle invalid date - null - 400 bad request
+
+        return this.collectionService.getCollectionByLocalDate(LocalDate.parse(date));
     }
 
     @PostMapping("/{id}")

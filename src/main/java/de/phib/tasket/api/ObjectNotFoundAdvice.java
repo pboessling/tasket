@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Deprecated
 @ControllerAdvice
-class TaskNotFoundAdvice {
+class ObjectNotFoundAdvice {
 
     @ResponseBody
     @ExceptionHandler(ObjectNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String taskNotFoundHandler(ObjectNotFoundException e) {
+    String objectNotFoundHandler(ObjectNotFoundException e) {
         return e.getMessage();
     }
 }

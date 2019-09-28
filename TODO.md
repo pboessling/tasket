@@ -1,7 +1,32 @@
 # TODO
 
 ## Planned Improvements
-- Add unique date identifier to collection (later to be extracted to DailyLog class)
+- Daily Log
+    - (/) Search for Collection for today
+    - (/) If exists, display that collection
+    - (!) Otherwise show:
+        - (/) button/link to create new Collection
+        - (x) (datepicker to select a specific Daily Log)
+    - (/) Button -> Create Daily Log
+        - (/) Creates new daily log for the given day in the backend
+        - (/) Redirects to /dailylog/<date>
+    - (/) Format headline 2019-09-27 -> Fri 27.09.2019
+    - (/) Pagination Links:
+        - (/) Previous day
+        - (/) Today
+        - (/) Next day
+- URL patterns:
+    - /dailylog
+    - /dailylog/2019-09-26
+    - /weeklylog
+    - /weeklylog/2019-W01
+    - /monthlylog
+    - /monthlylog/2019-09
+    - /yearlylog
+    - /yearlylog/2019
+- Cleanup code.
+- For Daily Log -> show link "go to weekly log, monthly log, yearly log"
+ 
 - Clean up + document timer.js.
 - Implement rank attribute for tasks.
 - Persist rank after drag & drop.
@@ -57,3 +82,5 @@
     - https://stackoverflow.com/questions/40718900/jiras-lexorank-algorithm-for-new-stories
     - https://www.youtube.com/watch?v=OjQv9xMoFbg
    -  https://prezi.com/zu442jt_9z2m/lexorank/
+- REST
+    - https://restfulapi.net/rest-put-vs-post/

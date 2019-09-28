@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
+// TODO: Is this Service still needed?
 @Service
 @Transactional
 public class CollectionService {
@@ -26,6 +28,11 @@ public class CollectionService {
     public Collection getCollection(String id) {
         return this.collectionRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException(id, Collection.class));
+    }
+
+    public Collection getCollectionByLocalDate(LocalDate localDate) {
+        // TODO: Adapt ObjectNotFoundException, so that the message reflects, that the search was based on a localDate, not an id.
+        return this.collectionRepository.findByLocalDate(localDate).orElseThrow(() -> new ObjectNotFoundException(localDate.toString(), Collection.class));
     }
 
     public Collection createCollection(Collection collection) {

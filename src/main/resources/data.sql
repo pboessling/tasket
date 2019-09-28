@@ -1,8 +1,8 @@
 values 1;
 
---insert into Collection (id, title) values ('1', 'Mo. 15.04.2019');
---insert into Collection (id, title) values ('2', 'Di. 16.04.2019');
---insert into Collection (id, title) values ('3', 'Mi. 16.04.2019');
+--insert into Collection (id, local_date, title) values ('1', '2019-04-15', 'Mo. 15.04.2019');
+--insert into Collection (id, local_date, title) values ('2', '2019-04-16', 'Di. 16.04.2019');
+--insert into Collection (id, local_date, title) values ('3', '2019-04-17', 'Mi. 17.04.2019');
 --
 --insert into Event (id, status, title, collection_id) values ('1', 0, '09:30-09:45 Daily Standup Project A', '1');
 --insert into Event (id, status, title, collection_id) values ('2', 0, '10:30-10:45 Daily Standup Project B', '1');
