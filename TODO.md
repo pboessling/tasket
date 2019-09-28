@@ -2,30 +2,33 @@
 
 ## Planned Improvements
 - Daily Log
-    - (/) Search for Collection for today
-    - (/) If exists, display that collection
-    - (!) Otherwise show:
-        - (/) button/link to create new Collection
-        - (x) (datepicker to select a specific Daily Log)
-    - (/) Button -> Create Daily Log
-        - (/) Creates new daily log for the given day in the backend
-        - (/) Redirects to /dailylog/<date>
-    - (/) Format headline 2019-09-27 -> Fri 27.09.2019
-    - (/) Pagination Links:
-        - (/) Previous day
-        - (/) Today
-        - (/) Next day
-- URL patterns:
-    - /dailylog
-    - /dailylog/2019-09-26
+    - Create new event
+    - Create new taks
+    - Edit event (text, date/time)
+    - Edit task
+    - Delete event
+    - Delete task
+    - Change event status to done
+    - Change task status to done
+    - Change event status to canceled
+    - Change task status to canceled
+    - Move event to other Daily Log
+    - Move task to other Daily Log
+    - Notes
+        - ...
+    - (?) (datepicker to select a specific Daily Log)
+    - (?) show link "go to weekly log, monthly log, yearly log of selected day"
+- Weekly Log
     - /weeklylog
     - /weeklylog/2019-W01
+- Monthly Log
     - /monthlylog
     - /monthlylog/2019-09
+- Yearly Log
     - /yearlylog
     - /yearlylog/2019
+- Collections    
 - Cleanup code.
-- For Daily Log -> show link "go to weekly log, monthly log, yearly log"
  
 - Clean up + document timer.js.
 - Implement rank attribute for tasks.
