@@ -70,6 +70,9 @@ public class DailyLogController {
         }
 
         collection.ifPresent(value -> {
+            model.addAttribute("collection", value);
+
+            // TODO: Maybe only need to add the collection to the model?
             model.addAttribute("events", value.getEvents());
             model.addAttribute("tasks", value.getTasks());
             model.addAttribute("notes", value.getNotes());

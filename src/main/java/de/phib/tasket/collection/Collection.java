@@ -40,8 +40,8 @@ public class Collection {
     public Collection() {
     }
 
-    public Collection(String title) {
-        this.title = title;
+    public Collection(String id) {
+        this.id = id;
     }
 
     public Collection(LocalDate localDate) {

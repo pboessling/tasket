@@ -2,8 +2,9 @@
 
 ## Planned Improvements
 - Daily Log
+    - Create new task
+        - Refactor and clean up code in tasklist.js
     - Create new event
-    - Create new taks
     - Edit event (text, date/time)
     - Edit task
     - Delete event
