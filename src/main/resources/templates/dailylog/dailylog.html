@@ -105,15 +105,21 @@
                         </a>
                     </th:block>
                 </th:block>
-                <p class="panel-block">
-                    <button class="task-add button is-fullwidth fas fa-plus "></button>
+                <p id="add-task-panel" class="panel-block">
+                    <button id="add-task-button" class="task-add button is-fullwidth fas fa-plus "></button>
+                </p>
+                <p id="add-task-form" class="panel-block" style="display: none;">
+                    <input id="create-task-input" type="text" class="input" placeholder="New Task"/>
+                    <button id="create-task-submit" type="submit" class="button is-success with-margin-left">Save
+                    </button>
+                    <button id="create-task-cancel" type="reset" class="button with-margin-left">Cancel</button>
                 </p>
             </div>
         </div>
     </section>
     <section class="section">
         <div class="container">
-            <div class="task-list panel">
+            <div class="note-list panel">
                 <h2 class="panel-heading">
                     <b>Notes</b>
                 </h2>

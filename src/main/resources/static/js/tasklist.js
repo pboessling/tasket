@@ -1,148 +1,104 @@
 function TaskList(displayElement) {
-    this.displayElement = displayElement;
-
     var _this = this;
 
+    // TODO: Remove, if no longer needed.
+    /*this.displayElement = displayElement;
     this.displayElement.querySelectorAll('.task-add')
         .forEach(element => element.addEventListener('click', function () {
             _this.add(element);
-        }));
-}
+        }));*/
 
-// TODO: Refactor and clean up this code.
-TaskList.prototype.add = function (element) {
-    var tasklistPanel = element.parentElement.parentElement;
-    var taskAddElement = element.parentElement;
+    // member variables
 
-    var newTaskElement = document.createElement('p');
-    newTaskElement.setAttribute('class', 'panel-block');
-    var newTaskInputField = document.createElement('input');
-    newTaskInputField.setAttribute('type', 'text');
-    newTaskInputField.setAttribute('class', 'input');
-    newTaskInputField.setAttribute('placeholder', 'New Task');
-    newTaskElement.appendChild(newTaskInputField);
+    this.tasklistPanel = displayElement;
+    this.addTaskButtonPanel = this.tasklistPanel.querySelector("#add-task-panel");
+    this.addTaskButton = this.addTaskButtonPanel.querySelector("#add-task-button");
+    this.addTaskFormPanel = this.tasklistPanel.querySelector("#add-task-form");
+    this.addTaskInputField = this.tasklistPanel.querySelector("#create-task-input");
+    this.addTaskSaveButton = this.addTaskFormPanel.querySelector("#create-task-submit");
+    this.addTaskCancelButton = this.addTaskFormPanel.querySelector("#create-task-cancel");
 
-    var newTaskSaveButton = document.createElement('button');
-    newTaskSaveButton.setAttribute('id', 'create-task-submit');
-    newTaskSaveButton.setAttribute('type', 'submit');
-    newTaskSaveButton.setAttribute('class', 'button is-success with-margin-left');
-    newTaskSaveButton.textContent = "Save";
-    newTaskElement.appendChild(newTaskSaveButton);
+    // event listeners
 
-    var newTaskCancelButton = document.createElement('button');
-    newTaskCancelButton.setAttribute('id', 'create-task-cancel');
-    newTaskCancelButton.setAttribute('type', 'submit');
-    newTaskCancelButton.setAttribute('class', 'button with-margin-left');
-    newTaskCancelButton.textContent = "Cancel";
-    newTaskElement.appendChild(newTaskCancelButton);
+    this.addTaskButton.addEventListener('click', showAddTaskForm);
 
-    //element.parentNode.parentNode.insertBefore(newTaskElement, element.parentNode);
-    taskAddElement.replaceWith(newTaskElement);
+    this.addTaskCancelButton.addEventListener('mousedown', hideAddTaskForm);
 
-    newTaskInputField.focus();
-
-    newTaskCancelButton.addEventListener('click', function () {
-        //tasklistPanel.removeChild(newTaskElement);
-        newTaskElement.replaceWith(taskAddElement);
+    this.addTaskSaveButton.addEventListener('mousedown', function () {
+        if (_this.addTaskInputField.value !== "") {
+            postAndAddTask();
+        }
+        hideAddTaskForm();
     });
 
-    newTaskSaveButton.addEventListener('click', function () {
-        if (newTaskInputField.value === "") {
-            tasklistPanel.removeChild(newTaskElement);
-        } else {
-            // TODO: extract to method
-            httpPostJson('/api/tasks', {
-                "collection": tasklistPanel.dataset.collectionId,
-                "title": newTaskInputField.value,
-                "status": "TODO"
-            });
-            //TODO: verify response status code
-            //newTaskElement.removeChild(newTaskInputField);
-            //newTaskElement.textContent = newTaskInputField.value;
-
-            //element.parentNode.parentNode.insertBefore(createTaskHtml(newTaskInputField.value),newTaskElement);
-            newTaskElement.parentElement.appendChild(taskAddElement);
-            newTaskElement.replaceWith(createTaskHtml(newTaskInputField.value));
-
+    this.addTaskInputField.addEventListener('focusout', function () {
+        if (_this.addTaskInputField.value === "") {
+            hideAddTaskForm();
         }
     });
 
-    newTaskInputField.addEventListener('focusout', function () {
-        if (newTaskInputField.value === "") {
-            newTaskElement.parentElement.appendChild(taskAddElement);
-            tasklistPanel.removeChild(newTaskElement);
-        } /*else {
-            // TODO: extract to method
-            httpPostJson('/api/tasks', {
-                "collection": tasklistPanel.dataset.collectionId,
-                "title": newTaskInputField.value,
-                "status": "TODO"
-            });
-            //TODO: verify response status code
-            //newTaskElement.removeChild(newTaskInputField);
-            //newTaskElement.textContent = newTaskInputField.value;
-            newTaskElement.replaceWith(createTaskHtml(newTaskInputField.value));
-        }*/
-    });
-
-    /**newTaskInputField.addEventListener('keyup', function (e) {
-        if (isKeypressEscape(e)) {
-            tasklistPanel.removeChild(newTaskElement);
-        } else if (isKeypressEnter(e)) {
-            if (newTaskInputField.value !== "") {
-                // TODO: extract to method
-                httpPostJson('/api/tasks', {
-                    "collection": tasklistPanel.dataset.collectionId,
-                    "title": newTaskInputField.value,
-                    "status": "TODO"
-                });
-                //TODO: change input field to p-tag
-                //newTaskElement.removeChild(newTaskInputField);
-                //newTaskElement.textContent = newTaskInputField.value;
-                newTaskElement.replaceWith(createTaskHtml(newTaskInputField.value));
-            } else {
-                tasklistPanel.removeChild(newTaskElement);
+    this.addTaskInputField.addEventListener('keyup', function (e) {
+        if (isKeypressEnter(e)) {
+            if (_this.addTaskInputField.value !== "") {
+                postAndAddTask();
             }
+            hideAddTaskForm();
         }
-    });*/
+    });
 
-    // TODO: add event listener -> keyboard enter
-    // TODO: add event listener -> keyboard esacpe
-};
+    // private functions
 
-function buildCreateTaskInput() {
-    var newTaskInputElement = document.createElement('p');
-    newTaskInputElement.setAttribute('class', 'panel-block task-new');
-    newTaskInputElement.innerHTML = `
-    <input type="text" class="input" placeholder="New Task" />
-    <button id="create-task" type="submit" class="button is-success">Save</button>
-    `;
+    function showAddTaskForm() {
+        _this.addTaskButtonPanel.style.display = "none";
+        _this.addTaskFormPanel.style.display = "";
 
-    return newTaskInputElement;
-}
+        _this.addTaskInputField.value = "";
+        _this.addTaskInputField.focus();
+    }
 
-function createTaskHtml(taskTitle) {
-    var newTaskElement = document.createElement('a');
-    newTaskElement.setAttribute('class', 'panel-block task-new');
-    newTaskElement.innerHTML = `
+    function hideAddTaskForm() {
+        _this.addTaskButtonPanel.style.display = "";
+        _this.addTaskFormPanel.style.display = "none";
+    }
+
+    function postAndAddTask() {
+        httpPostJson('/api/tasks', {
+            "collection": _this.tasklistPanel.dataset.collectionId,
+            "title": _this.addTaskInputField.value,
+            "status": "TODO"
+        });
+        //TODO: Verify response status code and only insert newTaskElement, if response was success.
+        _this.tasklistPanel.insertBefore(newTaskElement(_this.addTaskInputField.value), _this.addTaskButtonPanel);
+    }
+
+    function newTaskElement(taskTitle) {
+        let newTaskElement = document.createElement('a');
+        newTaskElement.setAttribute('class', 'panel-block task-new');
+        newTaskElement.innerHTML = `
         <span class="panel-icon">
-        <i class="fas fa-square" aria-hidden="true"></i>
+            <i class="fas fa-square" aria-hidden="true"></i>
         </span>
         <span>${taskTitle}</span>
         <div class="column is-paddingless"></div>
         <div class="column is-2 is-paddingless">
-        <div class="buttons has-addons is-pulled-right">
-        <button class="item-action button fas fa-check-square"></button>
-        <button class="item-action button fas fa-caret-square-right"></button>
-        <button class="item-action button fas fa-minus-square"></button>
-        <button class="item-action button fas fa-edit"></button>
-        <button class="item-action task-delete button fas fa-trash"></button>
-        </div>
+            <div class="buttons has-addons is-pulled-right">
+                <button class="item-action button fas fa-check-square"></button>
+                <button class="item-action button fas fa-caret-square-right"></button>
+                <button class="item-action button fas fa-minus-square"></button>
+                <button class="item-action button fas fa-edit"></button>
+                <button class="item-action task-delete button fas fa-trash"></button>
+            </div>
         </div>
         </a>`;
 
-    return newTaskElement;
+        return newTaskElement;
+    }
 }
+
+// TODO: Remove, if no longer needed.
+/*TaskList.prototype.add = function (element) {
+
+};*/
 
 function Task(displayElement) {
     this.displayElement = displayElement;
