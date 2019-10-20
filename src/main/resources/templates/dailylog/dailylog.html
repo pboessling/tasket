@@ -37,7 +37,7 @@
                         <div class="panel-block">
                             <form th:object="${editTask}" th:action="@{'/dailylog/edit/' + event.id}" method="post">
                                 <input type="hidden" th:field="*{id}"/>
-                                <input type="text" class="input" placeholder="New Task" th:field="*{title}"/>
+                                <input type="text" class="input" placeholder="New Event" th:field="*{title}"/>
                                 <button type="submit" class="button" th:text="#{button.add}"></button>
                             </form>
                         </div>
@@ -62,13 +62,13 @@
                         </a>
                     </th:block>
                 </th:block>
-                <p class="add-task-panel panel-block">
-                    <button class="add-task-button task-add button is-fullwidth fas fa-plus "></button>
+                <p class="add-item-button-panel panel-block">
+                    <button class="add-item-button task-add button is-fullwidth fas fa-plus "></button>
                 </p>
-                <p class="add-task-form panel-block" style="display: none;">
-                    <input type="text" class="create-task-input input" placeholder="New Task"/>
-                    <button type="submit" class="create-task-submit button is-success with-margin-left">Save</button>
-                    <button type="reset" class="create-task-cancel button with-margin-left">Cancel</button>
+                <p class="add-item-form-panel panel-block" style="display: none;">
+                    <input type="text" class="add-item-input input" placeholder="New Event"/>
+                    <button type="submit" class="add-item-submit button is-success with-margin-left">Save</button>
+                    <button type="reset" class="add-item-cancel button with-margin-left">Cancel</button>
                 </p>
             </div>
         </div>
@@ -109,13 +109,13 @@
                         </a>
                     </th:block>
                 </th:block>
-                <p class="add-task-panel panel-block">
-                    <button class="add-task-button task-add button is-fullwidth fas fa-plus "></button>
+                <p class="add-item-button-panel panel-block">
+                    <button class="add-item-button task-add button is-fullwidth fas fa-plus "></button>
                 </p>
-                <p class="add-task-form panel-block" style="display: none;">
-                    <input type="text" class="create-task-input input" placeholder="New Task"/>
-                    <button type="submit" class="create-task-submit button is-success with-margin-left">Save</button>
-                    <button type="reset" class="create-task-cancel button with-margin-left">Cancel</button>
+                <p class="add-item-form-panel panel-block" style="display: none;">
+                    <input type="text" class="add-item-input input" placeholder="New Task"/>
+                    <button type="submit" class="add-item-submit button is-success with-margin-left">Save</button>
+                    <button type="reset" class="add-item-cancel button with-margin-left">Cancel</button>
                 </p>
             </div>
         </div>

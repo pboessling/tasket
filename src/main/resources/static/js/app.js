@@ -90,7 +90,7 @@ var APP = APP || (function () {
                 timer.reset();
             });
 
-            //init tasklist
+            //init itemlists
             document.querySelectorAll('.item-list').forEach(element => new Itemlist(element));
             document.querySelectorAll('.task-new').forEach(element => new Task(element));
         }

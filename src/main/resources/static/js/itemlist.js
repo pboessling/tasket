@@ -10,61 +10,61 @@ function Itemlist(displayElement) {
 
     // member variables
 
-    this.tasklistPanel = displayElement;
+    this.itemListPanel = displayElement;
 
-    this.collectionId = this.tasklistPanel.dataset.collectionId;
-    this.itemType = this.tasklistPanel.dataset.itemType;
-    this.addTaskButtonPanel = this.tasklistPanel.querySelector(".add-task-panel");
-    this.addTaskButton = this.addTaskButtonPanel.querySelector(".add-task-button");
-    this.addTaskFormPanel = this.tasklistPanel.querySelector(".add-task-form");
-    this.addTaskInputField = this.tasklistPanel.querySelector(".create-task-input");
-    this.addTaskSaveButton = this.addTaskFormPanel.querySelector(".create-task-submit");
-    this.addTaskCancelButton = this.addTaskFormPanel.querySelector(".create-task-cancel");
+    this.collectionId = this.itemListPanel.dataset.collectionId;
+    this.itemType = this.itemListPanel.dataset.itemType;
+    this.addItemButtonPanel = this.itemListPanel.querySelector(".add-item-button-panel");
+    this.addItemButton = this.addItemButtonPanel.querySelector(".add-item-button");
+    this.addItemFormPanel = this.itemListPanel.querySelector(".add-item-form-panel");
+    this.addItemInputField = this.itemListPanel.querySelector(".add-item-input");
+    this.addItemSaveButton = this.addItemFormPanel.querySelector(".add-item-submit");
+    this.addItemCancelButton = this.addItemFormPanel.querySelector(".add-item-cancel");
 
     // event listeners
 
-    this.addTaskButton.addEventListener('click', showAddTaskForm);
+    this.addItemButton.addEventListener('click', showAddItemFormPanel);
 
-    this.addTaskCancelButton.addEventListener('mousedown', hideAddTaskForm);
+    this.addItemCancelButton.addEventListener('mousedown', hideAddItemFormPanel);
 
-    this.addTaskSaveButton.addEventListener('mousedown', function () {
-        if (_this.addTaskInputField.value !== "") {
-            postAndAddTask();
+    this.addItemSaveButton.addEventListener('mousedown', function () {
+        if (_this.addItemInputField.value !== "") {
+            postAndInsertItem();
         }
-        hideAddTaskForm();
+        hideAddItemFormPanel();
     });
 
-    this.addTaskInputField.addEventListener('focusout', function () {
-        if (_this.addTaskInputField.value === "") {
-            hideAddTaskForm();
+    this.addItemInputField.addEventListener('focusout', function () {
+        if (_this.addItemInputField.value === "") {
+            hideAddItemFormPanel();
         }
     });
 
-    this.addTaskInputField.addEventListener('keyup', function (e) {
+    this.addItemInputField.addEventListener('keyup', function (e) {
         if (isKeypressEnter(e)) {
-            if (_this.addTaskInputField.value !== "") {
-                postAndAddTask();
+            if (_this.addItemInputField.value !== "") {
+                postAndInsertItem();
             }
-            hideAddTaskForm();
+            hideAddItemFormPanel();
         }
     });
 
     // private functions
 
-    function showAddTaskForm() {
-        _this.addTaskButtonPanel.style.display = "none";
-        _this.addTaskFormPanel.style.display = "";
+    function showAddItemFormPanel() {
+        _this.addItemButtonPanel.style.display = "none";
+        _this.addItemFormPanel.style.display = "";
 
-        _this.addTaskInputField.value = "";
-        _this.addTaskInputField.focus();
+        _this.addItemInputField.value = "";
+        _this.addItemInputField.focus();
     }
 
-    function hideAddTaskForm() {
-        _this.addTaskButtonPanel.style.display = "";
-        _this.addTaskFormPanel.style.display = "none";
+    function hideAddItemFormPanel() {
+        _this.addItemButtonPanel.style.display = "";
+        _this.addItemFormPanel.style.display = "none";
     }
 
-    function postAndAddTask() {
+    function postAndInsertItem() {
         let addUrl = "";
         switch (_this.itemType) {
             case "task":
@@ -80,11 +80,12 @@ function Itemlist(displayElement) {
 
         httpPostJson(addUrl, {
             "collection": _this.collectionId,
-            "title": _this.addTaskInputField.value,
+            "title": _this.addItemInputField.value,
             "status": "TODO"
         });
         //TODO: Verify response status code and only insert newTaskElement, if response was success.
-        _this.tasklistPanel.insertBefore(newTaskElement(_this.addTaskInputField.value), _this.addTaskButtonPanel);
+        //TODO: Different HTML needed for event, task, note?
+        _this.itemListPanel.insertBefore(newTaskElement(_this.addItemInputField.value), _this.addItemButtonPanel);
     }
 
     function newTaskElement(taskTitle) {
