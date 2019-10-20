@@ -91,7 +91,7 @@ var APP = APP || (function () {
             });
 
             //init tasklist
-            document.querySelectorAll('.task-list').forEach(element => new TaskList(element));
+            document.querySelectorAll('.item-list').forEach(element => new Itemlist(element));
             document.querySelectorAll('.task-new').forEach(element => new Task(element));
         }
     }

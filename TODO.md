@@ -2,7 +2,8 @@
 
 ## Planned Improvements
 - Daily Log
-    - Create new event
+    - Refactor occurrences of "task" into "item" in itemlist.js
+    - Add date field to "Create new event" form
     - Edit event (text, date/time)
     - Edit task
     - Delete event

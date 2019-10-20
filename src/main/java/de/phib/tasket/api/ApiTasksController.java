@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Controller for providing a Web API to create, edit, and delete tasks.
  */
-@Deprecated
 @RestController
 @RequestMapping("/api")
 public class ApiTasksController {

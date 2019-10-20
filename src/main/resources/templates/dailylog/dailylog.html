@@ -28,7 +28,7 @@
     </section>
     <section class="section">
         <div class="container">
-            <div class="event-list panel">
+            <div class="item-list panel" th:attr="data-collection-id=${collection.getId()}, data-item-type=event">
                 <p class="panel-heading">
                     <b>Events</b>
                 </p>
@@ -45,7 +45,6 @@
                     <th:block th:unless="${event.id == editTask.id}">
                         <a class="panel-block task-new">
                             <span class="panel-icon">
-                                <!--<i class="fas fa-calendar" aria-hidden="true"></i>-->
                                 <i class="fas" aria-hidden="true"
                                    th:classappend="${event.status.name() == 'DONE'} ? fa-calendar-check : fa-calendar"></i>
                             </span>
@@ -63,15 +62,20 @@
                         </a>
                     </th:block>
                 </th:block>
-                <p class="panel-block">
-                    <button class="task-add button is-fullwidth fas fa-plus "></button>
+                <p class="add-task-panel panel-block">
+                    <button class="add-task-button task-add button is-fullwidth fas fa-plus "></button>
+                </p>
+                <p class="add-task-form panel-block" style="display: none;">
+                    <input type="text" class="create-task-input input" placeholder="New Task"/>
+                    <button type="submit" class="create-task-submit button is-success with-margin-left">Save</button>
+                    <button type="reset" class="create-task-cancel button with-margin-left">Cancel</button>
                 </p>
             </div>
         </div>
     </section>
     <section class="section">
         <div class="container">
-            <div class="task-list panel" th:attr="data-collection-id=${collection.getId()}">
+            <div class="item-list panel" th:attr="data-collection-id=${collection.getId()}, data-item-type=task">
                 <h2 class="panel-heading">
                     <b>Tasks</b>
                 </h2>
@@ -105,14 +109,13 @@
                         </a>
                     </th:block>
                 </th:block>
-                <p id="add-task-panel" class="panel-block">
-                    <button id="add-task-button" class="task-add button is-fullwidth fas fa-plus "></button>
+                <p class="add-task-panel panel-block">
+                    <button class="add-task-button task-add button is-fullwidth fas fa-plus "></button>
                 </p>
-                <p id="add-task-form" class="panel-block" style="display: none;">
-                    <input id="create-task-input" type="text" class="input" placeholder="New Task"/>
-                    <button id="create-task-submit" type="submit" class="button is-success with-margin-left">Save
-                    </button>
-                    <button id="create-task-cancel" type="reset" class="button with-margin-left">Cancel</button>
+                <p class="add-task-form panel-block" style="display: none;">
+                    <input type="text" class="create-task-input input" placeholder="New Task"/>
+                    <button type="submit" class="create-task-submit button is-success with-margin-left">Save</button>
+                    <button type="reset" class="create-task-cancel button with-margin-left">Cancel</button>
                 </p>
             </div>
         </div>

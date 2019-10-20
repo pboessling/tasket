@@ -1,4 +1,4 @@
-function TaskList(displayElement) {
+function Itemlist(displayElement) {
     var _this = this;
 
     // TODO: Remove, if no longer needed.
@@ -11,12 +11,15 @@ function TaskList(displayElement) {
     // member variables
 
     this.tasklistPanel = displayElement;
-    this.addTaskButtonPanel = this.tasklistPanel.querySelector("#add-task-panel");
-    this.addTaskButton = this.addTaskButtonPanel.querySelector("#add-task-button");
-    this.addTaskFormPanel = this.tasklistPanel.querySelector("#add-task-form");
-    this.addTaskInputField = this.tasklistPanel.querySelector("#create-task-input");
-    this.addTaskSaveButton = this.addTaskFormPanel.querySelector("#create-task-submit");
-    this.addTaskCancelButton = this.addTaskFormPanel.querySelector("#create-task-cancel");
+
+    this.collectionId = this.tasklistPanel.dataset.collectionId;
+    this.itemType = this.tasklistPanel.dataset.itemType;
+    this.addTaskButtonPanel = this.tasklistPanel.querySelector(".add-task-panel");
+    this.addTaskButton = this.addTaskButtonPanel.querySelector(".add-task-button");
+    this.addTaskFormPanel = this.tasklistPanel.querySelector(".add-task-form");
+    this.addTaskInputField = this.tasklistPanel.querySelector(".create-task-input");
+    this.addTaskSaveButton = this.addTaskFormPanel.querySelector(".create-task-submit");
+    this.addTaskCancelButton = this.addTaskFormPanel.querySelector(".create-task-cancel");
 
     // event listeners
 
@@ -62,8 +65,21 @@ function TaskList(displayElement) {
     }
 
     function postAndAddTask() {
-        httpPostJson('/api/tasks', {
-            "collection": _this.tasklistPanel.dataset.collectionId,
+        let addUrl = "";
+        switch (_this.itemType) {
+            case "task":
+                addUrl = "/api/tasks";
+                break;
+            case "event":
+                addUrl = "/api/events";
+                break;
+            case "note":
+                addUrl = "/api/notes";
+                break;
+        }
+
+        httpPostJson(addUrl, {
+            "collection": _this.collectionId,
             "title": _this.addTaskInputField.value,
             "status": "TODO"
         });
