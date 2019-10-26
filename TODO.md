@@ -2,7 +2,6 @@
 
 ## Planned Improvements
 - Daily Log
-    - Add note
     - Edit task
     - Edit event
     - Edit note
