@@ -43,7 +43,7 @@
                         </div>
                     </th:block>
                     <th:block th:unless="${event.id == editTask.id}">
-                        <a class="panel-block task-new">
+                        <a class="panel-block item" th:attr="data-item-id=${event.id}">
                             <span class="panel-icon">
                                 <i class="fas" aria-hidden="true"
                                    th:classappend="${event.status.name() == 'DONE'} ? fa-calendar-check : fa-calendar"></i>
@@ -52,11 +52,12 @@
                             <div class="column is-paddingless"></div>
                             <div class="column is-2 is-paddingless">
                                 <div class="buttons has-addons is-pulled-right">
-                                    <button class="item-action button fas fa-check-square"></button>
-                                    <button class="item-action button fas fa-caret-square-right"></button>
-                                    <button class="item-action button fas fa-minus-square"></button>
-                                    <button class="item-action button fas fa-edit"></button>
-                                    <button class="item-action task-delete button fas fa-trash"></button>
+                                    <button class="item-action button fas fa-check-square" title="Resolve"></button>
+                                    <button class="item-action button fas fa-caret-square-right" title="Move"></button>
+                                    <button class="item-action button fas fa-minus-square" title="Cancel"></button>
+                                    <button class="item-action button fas fa-edit" title="Edit"></button>
+                                    <button class="item-action action-delete button fas fa-trash"
+                                            title="Delete"></button>
                                 </div>
                             </div>
                         </a>
@@ -90,7 +91,7 @@
                         </div>
                     </th:block>
                     <th:block th:unless="${task.id == editTask.id}">
-                        <a class="panel-block task-new">
+                        <a class="panel-block item" th:attr="data-item-id=${task.id}">
                             <span class="panel-icon">
                                 <i class="fas" aria-hidden="true"
                                    th:classappend="${task.status.name() == 'DONE'} ? fa-check-square : fa-square"></i>
@@ -99,11 +100,12 @@
                             <div class="column is-paddingless"></div>
                             <div class="column is-2 is-paddingless">
                                 <div class="buttons has-addons is-pulled-right">
-                                    <button class="item-action button fas fa-check-square"></button>
-                                    <button class="item-action button fas fa-caret-square-right"></button>
-                                    <button class="item-action button fas fa-minus-square"></button>
-                                    <button class="item-action button fas fa-edit"></button>
-                                    <button class="item-action task-delete button fas fa-trash"></button>
+                                    <button class="item-action button fas fa-check-square" title="Resolve"></button>
+                                    <button class="item-action button fas fa-caret-square-right" title="Move"></button>
+                                    <button class="item-action button fas fa-minus-square" title="Cancel"></button>
+                                    <button class="item-action button fas fa-edit" title="Edit"></button>
+                                    <button class="item-action action-delete button fas fa-trash"
+                                            title="Delete"></button>
                                 </div>
                             </div>
                         </a>
@@ -137,7 +139,7 @@
                         </div>
                     </th:block>
                     <th:block th:unless="${note.id == editTask.id}">
-                        <a class="panel-block task-new">
+                        <a class="panel-block item" th:attr="data-item-id=${note.id}">
                             <span class="panel-icon">
                                 <i class="fas fa-file" aria-hidden="true"></i>
                             </span>
@@ -145,11 +147,12 @@
                             <div class="column is-paddingless"></div>
                             <div class="column is-2 is-paddingless">
                                 <div class="buttons has-addons is-pulled-right">
-                                    <button class="item-action button fas fa-check-square"></button>
-                                    <button class="item-action button fas fa-caret-square-right"></button>
-                                    <button class="item-action button fas fa-minus-square"></button>
-                                    <button class="item-action button fas fa-edit"></button>
-                                    <button class="item-action task-delete button fas fa-trash"></button>
+                                    <button class="item-action button fas fa-check-square" title="Resolve"></button>
+                                    <button class="item-action button fas fa-caret-square-right" title="Move"></button>
+                                    <button class="item-action button fas fa-minus-square" title="Cancel"></button>
+                                    <button class="item-action button fas fa-edit" title="Edit"></button>
+                                    <button class="item-action action-delete button fas fa-trash"
+                                            title="Delete"></button>
                                 </div>
                             </div>
                         </a>

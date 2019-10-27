@@ -92,7 +92,6 @@ var APP = APP || (function () {
 
             //init itemlists
             document.querySelectorAll('.item-list').forEach(element => new Itemlist(element));
-            document.querySelectorAll('.task-new').forEach(element => new Task(element));
         }
     }
 

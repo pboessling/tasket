@@ -14,6 +14,9 @@ function Itemlist(displayElement) {
 
     this.collectionId = this.itemListPanel.dataset.collectionId;
     this.itemType = this.itemListPanel.dataset.itemType;
+
+    this.itemListPanel.querySelectorAll('.item').forEach(element => new Item(element));
+
     this.addItemButtonPanel = this.itemListPanel.querySelector(".add-item-button-panel");
     this.addItemButton = this.addItemButtonPanel.querySelector(".add-item-button");
     this.addItemFormPanel = this.itemListPanel.querySelector(".add-item-form-panel");
@@ -85,7 +88,10 @@ function Itemlist(displayElement) {
         });
         //TODO: Verify response status code and only insert newTaskElement, if response was success.
         //TODO: Different HTML needed for event, task, note?
-        _this.itemListPanel.insertBefore(newTaskElement(_this.addItemInputField.value), _this.addItemButtonPanel);
+        let newItem = newTaskElement(_this.addItemInputField.value);
+        _this.itemListPanel.insertBefore(newItem, _this.addItemButtonPanel);
+
+        new Item(newItem);
     }
 
     function newTaskElement(taskTitle) {
@@ -99,11 +105,11 @@ function Itemlist(displayElement) {
         <div class="column is-paddingless"></div>
         <div class="column is-2 is-paddingless">
             <div class="buttons has-addons is-pulled-right">
-                <button class="item-action button fas fa-check-square"></button>
-                <button class="item-action button fas fa-caret-square-right"></button>
-                <button class="item-action button fas fa-minus-square"></button>
-                <button class="item-action button fas fa-edit"></button>
-                <button class="item-action task-delete button fas fa-trash"></button>
+                <button class="item-action button fas fa-check-square" title="Resolve"></button>
+                <button class="item-action button fas fa-caret-square-right" title="Move"></button>
+                <button class="item-action button fas fa-minus-square" title="Cancel"></button>
+                <button class="item-action button fas fa-edit" title="Edit"></button>
+                <button class="item-action action-delete button fas fa-trash" title="Delete"></button>
             </div>
         </div>
         </a>`;
@@ -113,32 +119,35 @@ function Itemlist(displayElement) {
 }
 
 // TODO: Remove, if no longer needed.
-/*TaskList.prototype.add = function (element) {
+/*ItemList.prototype.add = function (element) {
 
 };*/
 
-function Task(displayElement) {
+function Item(displayElement) {
     this.displayElement = displayElement;
+    this.parentElement = this.displayElement.parentElement;
+    this.itemType = this.parentElement.dataset.itemType;
+    this.itemId = this.displayElement.dataset.itemId;
 
     var _this = this;
 
-    this.displayElement.querySelectorAll('.task-delete')
+    this.displayElement.querySelectorAll('.action-delete')
         .forEach(element => element.addEventListener('click', function () {
             _this.delete();
         }));
 }
 
-Task.prototype.edit = function () {
+Item.prototype.edit = function () {
     console.log('edit called');
     // TODO: change element into an input field
 };
 
-Task.prototype.save = function () {
+Item.prototype.save = function () {
     console.log('save called');
     // TODO: change element back into text and send request to backend to save changed task
 };
 
-Task.prototype.delete = function () {
-    this.displayElement.parentElement.removeChild(this.displayElement);
+Item.prototype.delete = function () {
+    this.parentElement.removeChild(this.displayElement);
     // TODO: send request to backend to delete task
 };
