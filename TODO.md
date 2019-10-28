@@ -2,14 +2,10 @@
 
 ## Planned Improvements
 - Daily Log
-    - Refactor Item class in itemlist.js
-    - Delete task
-    - Delete event
-    - Delete note
     - Edit task
     - Edit event
     - Edit note
-    - newTaskElement() in itemlist.js only creates correct HTML for item type "task" 
+    - Refactor itemlist.js
     - Add date field to "Create new event" form
     - Edit event (text, date/time)
     - Change event status to done

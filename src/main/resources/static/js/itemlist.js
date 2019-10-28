@@ -15,7 +15,7 @@ function Itemlist(displayElement) {
     this.collectionId = this.itemListPanel.dataset.collectionId;
     this.itemType = this.itemListPanel.dataset.itemType;
 
-    this.itemListPanel.querySelectorAll('.item').forEach(element => new Item(element));
+    this.itemListPanel.querySelectorAll('.item').forEach(element => new Item(element, _this));
 
     this.addItemButtonPanel = this.itemListPanel.querySelector(".add-item-button-panel");
     this.addItemButton = this.addItemButtonPanel.querySelector(".add-item-button");
@@ -67,7 +67,7 @@ function Itemlist(displayElement) {
         _this.addItemFormPanel.style.display = "none";
     }
 
-    function postAndInsertItem() {
+    async function postAndInsertItem() {
         let addUrl = "";
         switch (_this.itemType) {
             case "task":
@@ -81,27 +81,68 @@ function Itemlist(displayElement) {
                 break;
         }
 
-        httpPostJson(addUrl, {
-            "collection": _this.collectionId,
-            "title": _this.addItemInputField.value,
-            "status": "TODO"
-        });
-        //TODO: Verify response status code and only insert newTaskElement, if response was success.
-        //TODO: Different HTML needed for event, task, note?
-        let newItem = newTaskElement(_this.addItemInputField.value);
-        _this.itemListPanel.insertBefore(newItem, _this.addItemButtonPanel);
+        try {
+            const itemData = await httpPost(addUrl, {
+                "collection": _this.collectionId,
+                "title": _this.addItemInputField.value,
+                "status": "TODO"
+            });
+            //TODO: Verify response status code and only insert newTaskElement, if response was success.
+            //TODO: Different HTML needed for event, task, note?
+            let newItem = newItemElement(itemData.id, itemData.title, _this.itemType);
+            _this.itemListPanel.insertBefore(newItem, _this.addItemButtonPanel);
 
-        new Item(newItem);
+            new Item(newItem, _this);
+        } catch (error) {
+            console.log(error);
+        }
+
     }
 
-    function newTaskElement(taskTitle) {
-        let newTaskElement = document.createElement('a');
-        newTaskElement.setAttribute('class', 'panel-block task-new');
-        newTaskElement.innerHTML = `
+    this.removeItem = function (item) {
+        let url = "";
+        switch (_this.itemType) {
+            case "task":
+                url = "/api/tasks";
+                break;
+            case "event":
+                url = "/api/events";
+                break;
+            case "note":
+                url = "/api/notes";
+                break;
+        }
+
+        url += "/" + item.displayElement.dataset.itemId;
+
+        httpDelete(url);
+        //TODO: Verify response status code and only insert newTaskElement, if response was success.
+        _this.itemListPanel.removeChild(item.displayElement);
+    };
+
+    function newItemElement(id, title, type) {
+        let newItemElement = document.createElement('a');
+        newItemElement.setAttribute('class', 'panel-block item');
+        newItemElement.setAttribute('data-item-id', id);
+
+        let iconClass = "";
+        switch (type) {
+            case "task":
+                iconClass = "fa-square";
+                break;
+            case "event":
+                iconClass = "fa-calendar";
+                break;
+            case "note":
+                iconClass = "fa-file";
+                break;
+        }
+
+        newItemElement.innerHTML = `
         <span class="panel-icon">
-            <i class="fas fa-square" aria-hidden="true"></i>
+            <i class="fas ${iconClass}" aria-hidden="true"></i>
         </span>
-        <span>${taskTitle}</span>
+        <span>${title}</span>
         <div class="column is-paddingless"></div>
         <div class="column is-2 is-paddingless">
             <div class="buttons has-addons is-pulled-right">
@@ -114,7 +155,7 @@ function Itemlist(displayElement) {
         </div>
         </a>`;
 
-        return newTaskElement;
+        return newItemElement;
     }
 }
 
@@ -123,8 +164,9 @@ function Itemlist(displayElement) {
 
 };*/
 
-function Item(displayElement) {
+function Item(displayElement, itemList) {
     this.displayElement = displayElement;
+    this.itemList = itemList;
     this.parentElement = this.displayElement.parentElement;
     this.itemType = this.parentElement.dataset.itemType;
     this.itemId = this.displayElement.dataset.itemId;
@@ -133,7 +175,8 @@ function Item(displayElement) {
 
     this.displayElement.querySelectorAll('.action-delete')
         .forEach(element => element.addEventListener('click', function () {
-            _this.delete();
+            //_this.delete();
+            _this.itemList.removeItem(_this);
         }));
 }
 
@@ -148,6 +191,6 @@ Item.prototype.save = function () {
 };
 
 Item.prototype.delete = function () {
-    this.parentElement.removeChild(this.displayElement);
+    //this.parentElement.removeChild(this.displayElement);
     // TODO: send request to backend to delete task
 };

@@ -1,8 +1,19 @@
-function httpPostJson(url, data) {
-    var request = new XMLHttpRequest();
-    request.open('POST', url, true);
-    request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-    request.send(JSON.stringify(data));
+async function httpPost(url, data) {
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8"
+        },
+        body: JSON.stringify(data)
+    });
+
+    return await response.json();
+}
+
+function httpDelete(url) {
+    let request = new XMLHttpRequest();
+    request.open('DELETE', url, true);
+    request.send();
 }
 
 function isKeypressEnter(e) {
