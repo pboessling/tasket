@@ -48,14 +48,17 @@
                                 <i class="fas" aria-hidden="true"
                                    th:classappend="${event.status.name() == 'DONE'} ? fa-calendar-check : fa-calendar"></i>
                             </span>
-                            <span th:text="${event.title}"></span>
+                            <span class="item-title" th:text="${event.title}"></span>
                             <div class="column is-paddingless"></div>
                             <div class="column is-2 is-paddingless">
                                 <div class="buttons has-addons is-pulled-right">
-                                    <button class="item-action button fas fa-check-square" title="Resolve"></button>
-                                    <button class="item-action button fas fa-caret-square-right" title="Move"></button>
-                                    <button class="item-action button fas fa-minus-square" title="Cancel"></button>
-                                    <button class="item-action button fas fa-edit" title="Edit"></button>
+                                    <button class="item-action action-resolve button fas fa-check-square"
+                                            title="Resolve"></button>
+                                    <button class="item-action action-move button fas fa-caret-square-right"
+                                            title="Move"></button>
+                                    <button class="item-action action-cancel button fas fa-minus-square"
+                                            title="Cancel"></button>
+                                    <button class="item-action action-edit button fas fa-edit" title="Edit"></button>
                                     <button class="item-action action-delete button fas fa-trash"
                                             title="Delete"></button>
                                 </div>
@@ -96,14 +99,17 @@
                                 <i class="fas" aria-hidden="true"
                                    th:classappend="${task.status.name() == 'DONE'} ? fa-check-square : fa-square"></i>
                             </span>
-                            <span th:text="${task.title}"></span>
+                            <span class="item-title" th:text="${task.title}"></span>
                             <div class="column is-paddingless"></div>
                             <div class="column is-2 is-paddingless">
                                 <div class="buttons has-addons is-pulled-right">
-                                    <button class="item-action button fas fa-check-square" title="Resolve"></button>
-                                    <button class="item-action button fas fa-caret-square-right" title="Move"></button>
-                                    <button class="item-action button fas fa-minus-square" title="Cancel"></button>
-                                    <button class="item-action button fas fa-edit" title="Edit"></button>
+                                    <button class="item-action action-resolve button fas fa-check-square"
+                                            title="Resolve"></button>
+                                    <button class="item-action action-move button fas fa-caret-square-right"
+                                            title="Move"></button>
+                                    <button class="item-action action-cancel button fas fa-minus-square"
+                                            title="Cancel"></button>
+                                    <button class="item-action action-edit button fas fa-edit" title="Edit"></button>
                                     <button class="item-action action-delete button fas fa-trash"
                                             title="Delete"></button>
                                 </div>
@@ -143,14 +149,17 @@
                             <span class="panel-icon">
                                 <i class="fas fa-file" aria-hidden="true"></i>
                             </span>
-                            <span th:text="${note.title}"></span>
+                            <span class="item-title" th:text="${note.title}"></span>
                             <div class="column is-paddingless"></div>
                             <div class="column is-2 is-paddingless">
                                 <div class="buttons has-addons is-pulled-right">
-                                    <button class="item-action button fas fa-check-square" title="Resolve"></button>
-                                    <button class="item-action button fas fa-caret-square-right" title="Move"></button>
-                                    <button class="item-action button fas fa-minus-square" title="Cancel"></button>
-                                    <button class="item-action button fas fa-edit" title="Edit"></button>
+                                    <button class="item-action action-resolve button fas fa-check-square"
+                                            title="Resolve"></button>
+                                    <button class="item-action action-move button fas fa-caret-square-right"
+                                            title="Move"></button>
+                                    <button class="item-action action-cancel button fas fa-minus-square"
+                                            title="Cancel"></button>
+                                    <button class="item-action action-edit button fas fa-edit" title="Edit"></button>
                                     <button class="item-action action-delete button fas fa-trash"
                                             title="Delete"></button>
                                 </div>
@@ -167,31 +176,6 @@
                     <button type="reset" class="add-item-cancel button with-margin-left">Cancel</button>
                 </p>
             </div>
-        </div>
-    </section>
-    <section class="section">
-        <div class="container">
-            <table class="table is-bordered is-striped is-fullwidth">
-                <tr>
-                    <th width="25%" th:each="status : ${taskStatus}" th:text="#{'task.status.' + ${status}}"></th>
-                </tr>
-                <tr>
-                    <td class="drop-zone" th:attr="data-task-status=${status.name()}" th:each="status : ${taskStatus}">
-                        <!--<th:block th:each="task : ${taskBoard.getTasksByStatus(status)}">-->
-                        <ul class="sortable-list" th:each="task : ${taskBoard.getTasksByStatus(status)}">
-                            <li th:attr="data-task-id=${task.getId()}" class="task notification box is-grey-lighter">
-                                <a class="delete" th:href="${'/tasks/delete/' + task.id}"></a>
-                                <span th:text="${task.title}"></span>
-                                [<a th:href="${'/tasks/edit/' + task.id}" th:text="#{link.edittask}">Edit</a>]
-                            </li>
-                            <!--</th:block>-->
-                        </ul>
-                        <div>
-                            <a class="button" style="width: 100%" th:href="@{/tasks/add}" th:text="#{link.addtask}"></a>
-                        </div>
-                    </td>
-                </tr>
-            </table>
         </div>
     </section>
 </main>

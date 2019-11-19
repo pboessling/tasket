@@ -146,10 +146,10 @@ function Itemlist(displayElement) {
         <div class="column is-paddingless"></div>
         <div class="column is-2 is-paddingless">
             <div class="buttons has-addons is-pulled-right">
-                <button class="item-action button fas fa-check-square" title="Resolve"></button>
-                <button class="item-action button fas fa-caret-square-right" title="Move"></button>
-                <button class="item-action button fas fa-minus-square" title="Cancel"></button>
-                <button class="item-action button fas fa-edit" title="Edit"></button>
+                <button class="item-action action-resolve button fas fa-check-square" title="Resolve"></button>
+                <button class="item-action action-move button fas fa-caret-square-right" title="Move"></button>
+                <button class="item-action action-cancel button fas fa-minus-square" title="Cancel"></button>
+                <button class="item-action action-edit button fas fa-edit" title="Edit"></button>
                 <button class="item-action action-delete button fas fa-trash" title="Delete"></button>
             </div>
         </div>
@@ -170,6 +170,7 @@ function Item(displayElement, itemList) {
     this.parentElement = this.displayElement.parentElement;
     this.itemType = this.parentElement.dataset.itemType;
     this.itemId = this.displayElement.dataset.itemId;
+    this.title = this.displayElement.querySelector('.item-title').textContent;
 
     var _this = this;
 
@@ -178,7 +179,33 @@ function Item(displayElement, itemList) {
             //_this.delete();
             _this.itemList.removeItem(_this);
         }));
+
+    this.displayElement.querySelector('.action-edit').addEventListener('click', function () {
+        _this.displayElement.innerHTML = _this.getEditableHtml();
+        // FIXME: event listener for save button -> save in backend and show changed non editable item
+        // FIXME: event listener for cancel button -> show unchanged non editable item
+    })
 }
+
+Item.prototype.getEditableHtml = function () {
+    let placeholderText = "";
+    switch (this.itemType) {
+        case "task":
+            placeholderText = "New Task";
+            break;
+        case "event":
+            placeholderText = "New Event";
+            break;
+        case "note":
+            placeholderText = "New Note";
+            break;
+    }
+
+    return `
+            <input type="text" class="add-item-input input" placeholder="${placeholderText}" value="${this.title}"/>
+            <button type="submit" class="add-item-submit button is-success with-margin-left">Save</button>
+            <button type="reset" class="add-item-cancel button with-margin-left">Cancel</button>`
+};
 
 Item.prototype.edit = function () {
     console.log('edit called');
