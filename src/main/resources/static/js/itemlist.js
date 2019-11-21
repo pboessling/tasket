@@ -188,16 +188,11 @@ function Item(displayElement, itemList) {
 
     var _this = this;
 
-    this.displayElement.querySelectorAll('.action-delete')
-        .forEach(element => element.addEventListener('click', function () {
-            //_this.delete();
-            _this.itemList.removeItem(_this);
-        }));
-
-    this.displayElement.querySelector('.action-edit').addEventListener('click', this.onEdit.bind(this), false);
+    this.displayElement.querySelector('.action-edit').addEventListener('click', this.edit.bind(this), false);
+    this.displayElement.querySelector('.action-delete').addEventListener('click', this.delete.bind(this), false);
 }
 
-Item.prototype.onEdit = function () {
+Item.prototype.edit = function () {
     this.displayElement.innerHTML = this.getEditableHtml();
 
     let editSubmit = this.displayElement.querySelector('.add-item-submit');
@@ -206,31 +201,32 @@ Item.prototype.onEdit = function () {
 
     editInput.focus();
 
-    editSubmit.addEventListener('click', this.onEditSave.bind(this), false);
-    editCancel.addEventListener('click', this.onEditCancel.bind(this), false);
+    editSubmit.addEventListener('click', this.editSave.bind(this), false);
+    editCancel.addEventListener('click', this.editCancel.bind(this), false);
 
     editInput.addEventListener('focusout', (function () {
         if (editInput.value === "" || editInput.value === this.title) {
-            this.onEditCancel();
+            this.editCancel();
         }
     }).bind(this), false);
 
     editInput.addEventListener('keyup', (function (e) {
         if (isKeypressEnter(e)) {
             if (editInput.value !== "" && editInput.value !== this.title) {
-                this.onEditSave();
+                this.editSave();
             }
-            this.onEditCancel();
+            this.editCancel();
         }
     }).bind(this), false);
 };
 
-Item.prototype.onEditCancel = function () {
+Item.prototype.editCancel = function () {
     this.displayElement.innerHTML = this.getNonEditableHtml();
-    this.displayElement.querySelector('.action-edit').addEventListener('click', this.onEdit.bind(this), false);
+    this.displayElement.querySelector('.action-edit').addEventListener('click', this.edit.bind(this), false);
+    this.displayElement.querySelector('.action-delete').addEventListener('click', this.delete.bind(this), false);
 };
 
-Item.prototype.onEditSave = async function () {
+Item.prototype.editSave = async function () {
     let newTitle = this.displayElement.querySelector('.add-item-input').value;
 
     let updateUrl = "";
@@ -262,7 +258,12 @@ Item.prototype.onEditSave = async function () {
     }
 
     this.displayElement.innerHTML = this.getNonEditableHtml();
-    this.displayElement.querySelector('.action-edit').addEventListener('click', this.onEdit.bind(this), false);
+    this.displayElement.querySelector('.action-edit').addEventListener('click', this.edit.bind(this), false);
+    this.displayElement.querySelector('.action-delete').addEventListener('click', this.delete.bind(this), false);
+};
+
+Item.prototype.delete = function () {
+    this.itemList.removeItem(this);
 };
 
 Item.prototype.getEditableHtml = function () {
@@ -300,19 +301,4 @@ Item.prototype.getNonEditableHtml = function () {
                 <button class="item-action action-delete button fas fa-trash" title="Delete"></button>
             </div>
         </div>`;
-};
-
-Item.prototype.edit = function () {
-    console.log('edit called');
-    // TODO: change element into an input field
-};
-
-Item.prototype.save = function () {
-    console.log('save called');
-    // TODO: change element back into text and send request to backend to save changed task
-};
-
-Item.prototype.delete = function () {
-    //this.parentElement.removeChild(this.displayElement);
-    // TODO: send request to backend to delete task
 };

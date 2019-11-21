@@ -2,7 +2,6 @@
 
 ## Planned Improvements
 - Daily Log
-    - Add eventlistener for removing item to newly added items
     - Resolve item (change item status to done)
     - Cancel item (change item status to canceled)
     - Move item to other Daily Log (duplicate item and change item status to moved)
