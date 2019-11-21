@@ -1,9 +1,9 @@
 package de.phib.tasket.taskboard;
 
-import de.phib.tasket.InfoAppProperties;
-import de.phib.tasket.item.task.Task;
-import de.phib.tasket.item.task.TaskRepository;
-import de.phib.tasket.item.task.TaskStatus;
+import de.phib.tasket.config.InfoAppProperties;
+import de.phib.tasket.itemlist.item.task.Task;
+import de.phib.tasket.itemlist.item.task.TaskRepository;
+import de.phib.tasket.itemlist.item.task.TaskStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

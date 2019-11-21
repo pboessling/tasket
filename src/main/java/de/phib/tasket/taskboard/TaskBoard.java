@@ -1,7 +1,7 @@
 package de.phib.tasket.taskboard;
 
-import de.phib.tasket.item.task.Task;
-import de.phib.tasket.item.task.TaskStatus;
+import de.phib.tasket.itemlist.item.task.Task;
+import de.phib.tasket.itemlist.item.task.TaskStatus;
 
 import java.util.List;
 import java.util.Map;

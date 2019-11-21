@@ -71,6 +71,9 @@
     - https://spring.io/guides/gs/accessing-data-jpa/
     - https://github.com/neocorp/spring-mvc-thymeleaf-crud
     - https://progressive-code.com/post/10/Simple-Spring-Boot-CRUD-application-with-Thymeleaf,-JPA-and-Bootstrap
+    - https://medium.com/@joel.barmettler/quick-introduction-to-spring-boot-24a4414a559b
+    - https://github.com/joelbarmettlerUZH/Spring_Boot_Demo
+    - https://stackoverflow.com/questions/51781348/spring-boot-call-a-rest-controller-method-from-a-service
 - Rank
     - https://stackoverflow.com/questions/9536262/best-representation-of-an-ordered-list-in-a-database
     - https://confluence.atlassian.com/jirakb/lexorank-management-779159218.html
