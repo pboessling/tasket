@@ -142,7 +142,7 @@ function Itemlist(displayElement) {
         <span class="panel-icon">
             <i class="fas ${iconClass}" aria-hidden="true"></i>
         </span>
-        <span>${title}</span>
+        <span class="item-title">${title}</span>
         <div class="column is-paddingless"></div>
         <div class="column is-2 is-paddingless">
             <div class="buttons has-addons is-pulled-right">
@@ -172,6 +172,20 @@ function Item(displayElement, itemList) {
     this.itemId = this.displayElement.dataset.itemId;
     this.title = this.displayElement.querySelector('.item-title').textContent;
 
+    switch (this.itemType) {
+        case "task":
+            this.iconClass = "fa-square";
+            break;
+        case "event":
+            this.iconClass = "fa-calendar";
+            break;
+        case "note":
+            this.iconClass = "fa-file";
+            break;
+        default:
+            this.iconClass = "";
+    }
+
     var _this = this;
 
     this.displayElement.querySelectorAll('.action-delete')
@@ -180,12 +194,76 @@ function Item(displayElement, itemList) {
             _this.itemList.removeItem(_this);
         }));
 
-    this.displayElement.querySelector('.action-edit').addEventListener('click', function () {
-        _this.displayElement.innerHTML = _this.getEditableHtml();
-        // FIXME: event listener for save button -> save in backend and show changed non editable item
-        // FIXME: event listener for cancel button -> show unchanged non editable item
-    })
+    this.displayElement.querySelector('.action-edit').addEventListener('click', this.onEdit.bind(this), false);
 }
+
+Item.prototype.onEdit = function () {
+    this.displayElement.innerHTML = this.getEditableHtml();
+
+    let editSubmit = this.displayElement.querySelector('.add-item-submit');
+    let editCancel = this.displayElement.querySelector('.add-item-cancel');
+    let editInput = this.displayElement.querySelector('.add-item-input');
+
+    editInput.focus();
+
+    editSubmit.addEventListener('click', this.onEditSave.bind(this), false);
+    editCancel.addEventListener('click', this.onEditCancel.bind(this), false);
+
+    editInput.addEventListener('focusout', (function () {
+        if (editInput.value === "" || editInput.value === this.title) {
+            this.onEditCancel();
+        }
+    }).bind(this), false);
+
+    editInput.addEventListener('keyup', (function (e) {
+        if (isKeypressEnter(e)) {
+            if (editInput.value !== "" && editInput.value !== this.title) {
+                this.onEditSave();
+            }
+            this.onEditCancel();
+        }
+    }).bind(this), false);
+};
+
+Item.prototype.onEditCancel = function () {
+    this.displayElement.innerHTML = this.getNonEditableHtml();
+    this.displayElement.querySelector('.action-edit').addEventListener('click', this.onEdit.bind(this), false);
+};
+
+Item.prototype.onEditSave = async function () {
+    let newTitle = this.displayElement.querySelector('.add-item-input').value;
+
+    let updateUrl = "";
+    switch (this.itemType) {
+        case "task":
+            updateUrl = "/api/tasks";
+            break;
+        case "event":
+            updateUrl = "/api/events";
+            break;
+        case "note":
+            updateUrl = "/api/notes";
+            break;
+    }
+
+    updateUrl += "/" + this.itemId;
+
+    try {
+        // TODO: Replace hardcoded status accordingly
+        const itemData = await httpPost(updateUrl, {
+            "title": newTitle,
+            "status": "TODO"
+        });
+        //TODO: Verify response status code and only replace title, if response was success.
+        this.title = newTitle;
+
+    } catch (error) {
+        console.log(error);
+    }
+
+    this.displayElement.innerHTML = this.getNonEditableHtml();
+    this.displayElement.querySelector('.action-edit').addEventListener('click', this.onEdit.bind(this), false);
+};
 
 Item.prototype.getEditableHtml = function () {
     let placeholderText = "";
@@ -205,6 +283,23 @@ Item.prototype.getEditableHtml = function () {
             <input type="text" class="add-item-input input" placeholder="${placeholderText}" value="${this.title}"/>
             <button type="submit" class="add-item-submit button is-success with-margin-left">Save</button>
             <button type="reset" class="add-item-cancel button with-margin-left">Cancel</button>`
+};
+
+Item.prototype.getNonEditableHtml = function () {
+    return `<span class="panel-icon">
+            <i class="fas ${this.iconClass}" aria-hidden="true"></i>
+        </span>
+        <span class="item-title">${this.title}</span>
+        <div class="column is-paddingless"></div>
+        <div class="column is-2 is-paddingless">
+            <div class="buttons has-addons is-pulled-right">
+                <button class="item-action action-resolve button fas fa-check-square" title="Resolve"></button>
+                <button class="item-action action-move button fas fa-caret-square-right" title="Move"></button>
+                <button class="item-action action-cancel button fas fa-minus-square" title="Cancel"></button>
+                <button class="item-action action-edit button fas fa-edit" title="Edit"></button>
+                <button class="item-action action-delete button fas fa-trash" title="Delete"></button>
+            </div>
+        </div>`;
 };
 
 Item.prototype.edit = function () {

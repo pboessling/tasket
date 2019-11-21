@@ -2,9 +2,6 @@
 
 ## Planned Improvements
 - Daily Log
-    - Edit task
-        - event listener for save button -> save in backend and show changed non editable item
-        - event listener for cancel button -> show unchanged non editable item
     - Edit event
     - Edit note
     - Refactor itemlist.js
