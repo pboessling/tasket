@@ -2,19 +2,13 @@
 
 ## Planned Improvements
 - Daily Log
-    - Edit event
-    - Edit note
+    - Add eventlistener for removing item to newly added items
+    - Resolve item (change item status to done)
+    - Cancel item (change item status to canceled)
+    - Move item to other Daily Log (duplicate item and change item status to moved)
     - Refactor itemlist.js
     - Add date field to "Create new event" form
     - Edit event (text, date/time)
-    - Change event status to done
-    - Change task status to done
-    - Change event status to canceled
-    - Change task status to canceled
-    - Move event to other Daily Log
-    - Move task to other Daily Log
-    - Notes
-        - ...
     - (?) (datepicker to select a specific Daily Log)
     - (?) show link "go to weekly log, monthly log, yearly log of selected day"
 - Weekly Log
@@ -26,7 +20,7 @@
 - Yearly Log
     - /yearlylog
     - /yearlylog/2019
-- Collections    
+- Custom collections    
 - Cleanup code.
  
 - Clean up + document timer.js.
