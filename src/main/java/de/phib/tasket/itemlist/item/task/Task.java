@@ -1,6 +1,7 @@
 package de.phib.tasket.itemlist.item.task;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import de.phib.tasket.itemlist.item.ItemStatus;
 import de.phib.tasket.itemlist.list.collection.Collection;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.GenericGenerator;
@@ -8,7 +9,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 /**
- * A task.
+ * Entity class representing a task in a daily log.
  */
 @Entity
 public class Task {
@@ -20,30 +21,18 @@ public class Task {
 
     private String title;
 
+    @Enumerated(EnumType.ORDINAL)
+    private ItemStatus status;
+
     @ManyToOne
     @JoinColumn(name = "collection_id", nullable = false)
     @JsonBackReference
     private Collection collection;
 
-    @Enumerated(EnumType.ORDINAL)
-    private TaskStatus status;
-
     /**
      * Creates a new Task.
      */
     public Task() {
-    }
-
-    /**
-     * Creates a new Task.
-     *
-     * @param title the title of the task
-     * @param status the status of the task
-     */
-    // TODO: In the constructor the status should always be set to TODO.
-    public Task(String title, TaskStatus status) {
-        this.title = title;
-        this.status = status;
     }
 
     /**
@@ -54,7 +43,6 @@ public class Task {
     public String getId() {
         return id;
     }
-
 
     /**
      * Sets the id of the task
@@ -83,16 +71,12 @@ public class Task {
         this.title = title;
     }
 
-    public Collection getCollection() {
-        return this.collection;
-    }
-
     /**
      * Returns the status of the task.
      *
      * @return the status of the task
      */
-    public TaskStatus getStatus() {
+    public ItemStatus getStatus() {
         return status;
     }
 
@@ -101,8 +85,17 @@ public class Task {
      *
      * @param status the status to set
      */
-    public void setStatus(TaskStatus status) {
+    public void setStatus(ItemStatus status) {
         this.status = status;
+    }
+
+    /**
+     * Returns the collection this task belongs to.
+     *
+     * @return the collection this task belongs to
+     */
+    public Collection getCollection() {
+        return this.collection;
     }
 
     /**
@@ -115,6 +108,7 @@ public class Task {
                 .append("id", id)
                 .append("title", title)
                 .append("status", status)
+                .append("collection", collection.getId())
                 .toString();
     }
 

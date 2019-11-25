@@ -7,6 +7,9 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
+/**
+ * Entity class representing a note in a daily log.
+ */
 @Entity
 public class Note {
 
@@ -22,29 +25,53 @@ public class Note {
     @JsonBackReference
     private Collection collection;
 
+    /**
+     * Creates a new note.
+     */
     public Note() {
     }
 
-    public Note(String title) {
-        this.title = title;
-    }
-
+    /**
+     * Returns the id of the note.
+     *
+     * @return the id of the note
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Sets the id of the note
+     *
+     * @param id the id to set
+     */
     public void setId(String id) {
         this.id = id;
     }
 
+    /**
+     * Returns the title of the note.
+     *
+     * @return the title of the note
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Sets the title of the note
+     *
+     * @param title the title to set
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
+    /**
+     * Returns the collection this note belongs to.
+     *
+     * @return the collection this note belongs to
+     */
     public Collection getCollection() {
         return this.collection;
     }
@@ -53,6 +80,7 @@ public class Note {
         return new ToStringBuilder(this)
                 .append("id", id)
                 .append("title", title)
+                .append("collection", collection.getId())
                 .toString();
     }
 

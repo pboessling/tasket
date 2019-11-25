@@ -1,9 +1,9 @@
 package de.phib.tasket.taskboard;
 
 import de.phib.tasket.config.InfoAppProperties;
+import de.phib.tasket.itemlist.item.ItemStatus;
 import de.phib.tasket.itemlist.item.task.Task;
 import de.phib.tasket.itemlist.item.task.TaskRepository;
-import de.phib.tasket.itemlist.item.task.TaskStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,7 +46,7 @@ public class TaskBoardController {
         TaskBoard taskBoard = new TaskBoard(tasks);
 
         model.addAttribute("taskBoard", taskBoard);
-        model.addAttribute("taskStatus", TaskStatus.values());
+        model.addAttribute("taskStatus", ItemStatus.values());
         model.addAttribute("appVersion", this.appVersion);
 
         return "showTasks";
@@ -73,7 +73,7 @@ public class TaskBoardController {
     @GetMapping("/tasks/add")
     public String addTask(Model model) {
         model.addAttribute("task", new Task());
-        model.addAttribute("allTaskStatus", TaskStatus.values());
+        model.addAttribute("allTaskStatus", ItemStatus.values());
 
         return "addTask";
     }
@@ -88,7 +88,7 @@ public class TaskBoardController {
     @GetMapping(path = "/tasks/edit/{id}")
     public String editTask(Model model, @PathVariable(value = "id") String id) {
         model.addAttribute("task", taskRepository.findById(id));
-        model.addAttribute("allTaskStatus", TaskStatus.values());
+        model.addAttribute("allTaskStatus", ItemStatus.values());
         return "editTask";
     }
 

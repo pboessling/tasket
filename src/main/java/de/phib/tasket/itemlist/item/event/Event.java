@@ -1,13 +1,16 @@
 package de.phib.tasket.itemlist.item.event;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import de.phib.tasket.itemlist.item.task.TaskStatus;
+import de.phib.tasket.itemlist.item.ItemStatus;
 import de.phib.tasket.itemlist.list.collection.Collection;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
+/**
+ * Entity class representing an event in a daily log.
+ */
 @Entity
 public class Event {
 
@@ -18,39 +21,54 @@ public class Event {
 
     private String title;
 
+    @Enumerated(EnumType.ORDINAL)
+    private ItemStatus status;
+
     @ManyToOne
     @JoinColumn(name = "collection_id", nullable = false)
     @JsonBackReference
     private Collection collection;
 
-    @Enumerated(EnumType.ORDINAL)
-    private TaskStatus status;
-
+    /**
+     * Creates a new Event.
+     */
     public Event() {
     }
 
-    public Event(String title) {
-        this.title = title;
-    }
-
+    /**
+     * Returns the id of the event.
+     *
+     * @return the id of the event
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Sets the id of the event
+     *
+     * @param id the id to set
+     */
     public void setId(String id) {
         this.id = id;
     }
 
+    /**
+     * Returns the title of the event.
+     *
+     * @return the title of the event
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Sets the title of the event
+     *
+     * @param title the title to set
+     */
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public Collection getCollection() {
-        return this.collection;
     }
 
     /**
@@ -58,7 +76,7 @@ public class Event {
      *
      * @return the status of the event
      */
-    public TaskStatus getStatus() {
+    public ItemStatus getStatus() {
         return status;
     }
 
@@ -67,8 +85,17 @@ public class Event {
      *
      * @param status the status to set
      */
-    public void setStatus(TaskStatus status) {
+    public void setStatus(ItemStatus status) {
         this.status = status;
+    }
+
+    /**
+     * Returns the collection this event belongs to.
+     *
+     * @return the collection this event belongs to
+     */
+    public Collection getCollection() {
+        return this.collection;
     }
 
     public String toString() {
@@ -76,6 +103,7 @@ public class Event {
                 .append("id", id)
                 .append("title", title)
                 .append("status", status)
+                .append("collection", collection.getId())
                 .toString();
     }
 

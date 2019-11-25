@@ -39,26 +39,4 @@ public class TasketApplication {
         System.setProperty("derby.system.home", systemDir);
     }
 
-    /**
-     * CommandLineRunner to generate some test data.
-     *
-     * @param repository the TaskRepository
-     * @return a CommandLineRunner
-     */
-    //TODO: Remove, if no longer needed.
-    /*@Bean
-    public CommandLineRunner generateTestData(TaskRepository repository) {
-        return (args) -> {
-            if (this.generateTestData) {
-                LOG.info("Generating test data");
-
-                repository.save(new Task("Go shopping", TaskStatus.TODO));
-                repository.save(new Task("Clean apartment", TaskStatus.TODO));
-                repository.save(new Task("Do dishes", TaskStatus.TODO));
-                repository.save(new Task("Read book", TaskStatus.TODO));
-                repository.save(new Task("Play with cat", TaskStatus.TODO));
-            }
-        };
-    }*/
-
 }
