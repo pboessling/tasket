@@ -76,6 +76,30 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.7</version>
         </dependency>
+
+        <!-- Override javassist version 3.22.0-GA from spring-boot-starter-data-jpa.
+            This fixes javassist runtime error with JDK11.
+            See https://github.com/jboss-javassist/javassist/issues/194 -->
+        <!-- TODO: Find a permanent solution -->
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.23.1-GA</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!--
+            https://stackoverflow.com/questions/43574426/how-to-resolve-java-lang-noclassdeffounderror-javax-xml-bind-jaxbexception-in-j
+            https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-with-Java-9-and-above
+        -->
+        <!-- TODO: Find a permanent solution -->
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>2.3.2</version>
+            <scope>runtime</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
