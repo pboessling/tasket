@@ -2,7 +2,6 @@
 
 ## Planned Improvements
 - Refactorings
-    - Packages: data (event, note, task, collection), web (dailylogview)
     - Introduce/update service classes for event, note, task, collection to be used in the controllers, instead of the repository classes directly.
 - Daily Log
     - Resolve item (change item status to done)
