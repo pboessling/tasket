@@ -2,9 +2,7 @@ package de.phib.tasket.web.dailylog;
 
 import de.phib.tasket.config.InfoAppProperties;
 import de.phib.tasket.data.collection.Collection;
-import de.phib.tasket.data.collection.CollectionRepository;
-import de.phib.tasket.data.item.event.EventRepository;
-import de.phib.tasket.data.item.note.NoteRepository;
+import de.phib.tasket.data.collection.CollectionService;
 import de.phib.tasket.data.item.task.Task;
 import de.phib.tasket.data.item.task.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,22 +20,16 @@ import java.util.Optional;
 @Controller
 public class DailyLogWebController {
 
-    private CollectionRepository collectionRepository;
+    private CollectionService collectionService;
 
     private TaskRepository taskRepository;
-
-    private EventRepository eventRepository;
-
-    private NoteRepository noteRepository;
 
     private String appVersion;
 
     @Autowired
-    public DailyLogWebController(CollectionRepository collectionRepository, TaskRepository taskRepository, EventRepository eventRepository, NoteRepository noteRepository, InfoAppProperties infoAppProperties) {
-        this.collectionRepository = collectionRepository;
+    public DailyLogWebController(CollectionService collectionService, TaskRepository taskRepository, InfoAppProperties infoAppProperties) {
+        this.collectionService = collectionService;
         this.taskRepository = taskRepository;
-        this.eventRepository = eventRepository;
-        this.noteRepository = noteRepository;
         this.appVersion = infoAppProperties.getVersion();
     }
 
@@ -62,7 +54,7 @@ public class DailyLogWebController {
         model.addAttribute("previousDay", date.minusDays(1));
         model.addAttribute("nextDay", date.plusDays(1));
 
-        Optional<Collection> collection = collectionRepository.findByLocalDate(date);
+        Optional<Collection> collection = collectionService.findByLocalDate(date);
 
         if (!collection.isPresent()) {
             model.addAttribute("dailyLog", new Collection(date));
@@ -88,11 +80,12 @@ public class DailyLogWebController {
     @PostMapping(path = "/dailylog")
     public String createDailyLog(/*@RequestBody*/Collection collection) {
         // FIXME: Check, if a collection with the given localDate already exists. If yes, then return a 409 error.
-        this.collectionRepository.save(collection);
+        this.collectionService.save(collection);
         return "redirect:/dailylog/" + collection.getLocalDate();
     }
 
     // TODO: Check, if following methods are still neded
+
 
     @GetMapping("/dashboard2")
     public String renderDashboard2(Model model, @ModelAttribute("editTask") Task editTask) {

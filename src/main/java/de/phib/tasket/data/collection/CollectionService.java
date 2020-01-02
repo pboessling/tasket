@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 // TODO: Is this Service still needed?
 @Service
@@ -20,6 +21,16 @@ public class CollectionService {
     public CollectionService(CollectionRepository collectionRepository) {
         this.collectionRepository = collectionRepository;
     }
+
+    /* Methods for DailyLogWebController - Start */
+    public Optional<Collection> findByLocalDate(LocalDate localDate) {
+        return this.collectionRepository.findByLocalDate(localDate);
+    }
+
+    public Collection save(Collection collection) {
+        return this.collectionRepository.save(collection);
+    }
+    /* Methods for DailyLogWebController - End */
 
     public Iterable<Collection> getAllCollections() {
         return this.collectionRepository.findAll();

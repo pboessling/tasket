@@ -2,7 +2,7 @@
 
 ## Planned Improvements
 - Refactorings
-    - Introduce/update service classes for event, note, task, collection to be used in the controllers, instead of the repository classes directly.
+    - Introduce classes for note and task to be used in the controllers, instead of the repository classes directly.
 - Daily Log
     - Resolve item (change item status to done)
     - Cancel item (change item status to canceled)
@@ -23,7 +23,8 @@
     - /yearlylog/2019
 - Custom collections    
 - Cleanup code.
- 
+
+- SaaS vs. installable app that synchronizes to own cloud/storage 
 - Clean up + document timer.js.
 - Implement rank attribute for tasks.
 - Persist rank after drag & drop.

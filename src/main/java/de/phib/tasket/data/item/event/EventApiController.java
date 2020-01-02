@@ -14,16 +14,16 @@ public class EventApiController {
     // TODO: Rename to EventsController?
     // TODO: Move request mapping path segment "events" up from methods to class definition?
 
-    private EventRepository eventRepository;
+    private EventService eventService;
 
     /**
      * Creates a new ApiEventsController.
      *
-     * @param eventRepository an EventRepository
+     * @param eventService an EventService
      */
     @Autowired
-    public EventApiController(EventRepository eventRepository) {
-        this.eventRepository = eventRepository;
+    public EventApiController(EventService eventService) {
+        this.eventService = eventService;
     }
 
     /**
@@ -34,7 +34,7 @@ public class EventApiController {
     // TODO: Is this API method still needed?
     @GetMapping("/events")
     public Iterable<Event> listAllEvents() {
-        return this.eventRepository.findAll();
+        return this.eventService.findAll();
     }
 
     /**
@@ -45,7 +45,7 @@ public class EventApiController {
      */
     @PostMapping("/events")
     public Event createEvent(@RequestBody Event newEvent) {
-        return this.eventRepository.save(newEvent);
+        return this.eventService.save(newEvent);
     }
 
     /**
@@ -56,7 +56,7 @@ public class EventApiController {
      */
     @GetMapping("/events/{id}")
     public Event getEvent(@PathVariable("id") String id) {
-        return this.eventRepository.findById(id)
+        return this.eventService.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException(id, Event.class));
     }
 
@@ -69,15 +69,15 @@ public class EventApiController {
      */
     @PostMapping("/events/{id}")
     public Event updateEvent(@PathVariable("id") String id, @RequestBody Event newEvent) {
-        return this.eventRepository.findById(id)
-                .map(task -> {
-                    task.setTitle(newEvent.getTitle());
-                    task.setStatus(newEvent.getStatus());
-                    return this.eventRepository.save(task);
+        return this.eventService.findById(id)
+                .map(event -> {
+                    event.setTitle(newEvent.getTitle());
+                    event.setStatus(newEvent.getStatus());
+                    return this.eventService.save(event);
                 })
                 .orElseGet(() -> {
                     newEvent.setId(id);
-                    return this.eventRepository.save(newEvent);
+                    return this.eventService.save(newEvent);
                 });
     }
 
@@ -88,7 +88,7 @@ public class EventApiController {
      */
     @DeleteMapping("/events/{id}")
     public void deleteEvent(@PathVariable("id") String id) {
-        this.eventRepository.deleteById(id);
+        this.eventService.deleteById(id);
     }
 
 }
