@@ -1,8 +1,6 @@
 # TODO
 
 ## Planned Improvements
-- Refactorings
-    - Introduce classes for note and task to be used in the controllers, instead of the repository classes directly.
 - Daily Log
     - Resolve item (change item status to done)
     - Cancel item (change item status to canceled)

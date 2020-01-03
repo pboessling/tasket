@@ -14,16 +14,16 @@ public class TaskApiController {
     // TODO: Rename to TasksController?
     // TODO: Move request mapping path segment "tasks" up from methods to class definition?
 
-    private TaskRepository taskRepository;
+    private TaskService taskService;
 
     /**
      * Creates a new ApiTasksController.
      *
-     * @param taskRepository a TaskRepository
+     * @param taskService a TaskService
      */
     @Autowired
-    public TaskApiController(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
+    public TaskApiController(TaskService taskService) {
+        this.taskService = taskService;
     }
 
     /**
@@ -34,7 +34,7 @@ public class TaskApiController {
     // TODO: Is this API method still needed?
     @GetMapping("/tasks")
     public Iterable<Task> listAllTasks() {
-        return this.taskRepository.findAll();
+        return this.taskService.findAll();
     }
 
     /**
@@ -45,7 +45,7 @@ public class TaskApiController {
      */
     @PostMapping("/tasks")
     public Task createTask(@RequestBody Task newTask) {
-        return this.taskRepository.save(newTask);
+        return this.taskService.save(newTask);
     }
 
     /**
@@ -56,7 +56,7 @@ public class TaskApiController {
      */
     @GetMapping("/tasks/{id}")
     public Task getTask(@PathVariable("id") String id) {
-        return this.taskRepository.findById(id)
+        return this.taskService.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException(id, Task.class));
     }
 
@@ -69,15 +69,15 @@ public class TaskApiController {
      */
     @PostMapping("/tasks/{id}")
     public Task updateTask(@PathVariable("id") String id, @RequestBody Task newTask) {
-        return this.taskRepository.findById(id)
+        return this.taskService.findById(id)
                 .map(task -> {
                     task.setTitle(newTask.getTitle());
                     task.setStatus(newTask.getStatus());
-                    return this.taskRepository.save(task);
+                    return this.taskService.save(task);
                 })
                 .orElseGet(() -> {
                     newTask.setId(id);
-                    return this.taskRepository.save(newTask);
+                    return this.taskService.save(newTask);
                 });
     }
 
@@ -88,7 +88,7 @@ public class TaskApiController {
      */
     @DeleteMapping("/tasks/{id}")
     public void deleteTask(@PathVariable("id") String id) {
-        this.taskRepository.deleteById(id);
+        this.taskService.deleteById(id);
     }
 
 }

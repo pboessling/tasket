@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class NoteApiController {
 
-    private NoteRepository noteRepository;
+    private NoteService noteService;
 
     /**
      * Creates a new ApiNotesController.
      *
-     * @param noteRepository a NoteRepository
+     * @param noteService a NoteService
      */
     @Autowired
-    public NoteApiController(NoteRepository noteRepository) {
-        this.noteRepository = noteRepository;
+    public NoteApiController(NoteService noteService) {
+        this.noteService = noteService;
     }
 
     /**
@@ -31,7 +31,7 @@ public class NoteApiController {
     // TODO: Is this API method still needed?
     @GetMapping("/notes")
     public Iterable<Note> listAllNotes() {
-        return this.noteRepository.findAll();
+        return this.noteService.findAll();
     }
 
     /**
@@ -42,7 +42,7 @@ public class NoteApiController {
      */
     @PostMapping("/notes")
     public Note createNote(@RequestBody Note newNote) {
-        return this.noteRepository.save(newNote);
+        return this.noteService.save(newNote);
     }
 
     /**
@@ -53,7 +53,7 @@ public class NoteApiController {
      */
     @GetMapping("/notes/{id}")
     public Note getNote(@PathVariable("id") String id) {
-        return this.noteRepository.findById(id)
+        return this.noteService.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException(id, Note.class));
     }
 
@@ -66,14 +66,14 @@ public class NoteApiController {
      */
     @PostMapping("/notes/{id}")
     public Note updateNote(@PathVariable("id") String id, @RequestBody Note newNote) {
-        return this.noteRepository.findById(id)
+        return this.noteService.findById(id)
                 .map(note -> {
                     note.setTitle(newNote.getTitle());
-                    return this.noteRepository.save(note);
+                    return this.noteService.save(note);
                 })
                 .orElseGet(() -> {
                     newNote.setId(id);
-                    return this.noteRepository.save(newNote);
+                    return this.noteService.save(newNote);
                 });
     }
 
@@ -84,7 +84,7 @@ public class NoteApiController {
      */
     @DeleteMapping("/notes/{id}")
     public void deleteNote(@PathVariable("id") String id) {
-        this.noteRepository.deleteById(id);
+        this.noteService.deleteById(id);
     }
 
 }
