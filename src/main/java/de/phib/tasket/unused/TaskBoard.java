@@ -28,11 +28,11 @@ public class TaskBoard {
     }
 
     public List<Task> getTasksPlanned() {
-        return this.getTasksByStatus(ItemStatus.PLANNED);
+        return this.getTasksByStatus(/*ItemStatus.PLANNED*/ItemStatus.TODO);
     }
 
     public List<Task> getTasksSelected() {
-        return this.getTasksByStatus(ItemStatus.SELECTED);
+        return this.getTasksByStatus(/*ItemStatus.SELECTED*/ItemStatus.TODO);
     }
 
     public List<Task> getTasksDone() {

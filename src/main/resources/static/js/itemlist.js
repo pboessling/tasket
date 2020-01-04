@@ -172,6 +172,7 @@ function Item(displayElement, itemList) {
     this.itemId = this.displayElement.dataset.itemId;
     this.title = this.displayElement.querySelector('.item-title').textContent;
 
+    // TODO: Revove and replace usage with getIconClass().
     switch (this.itemType) {
         case "task":
             this.iconClass = "fa-square";
@@ -188,9 +189,27 @@ function Item(displayElement, itemList) {
 
     var _this = this;
 
+    this.displayElement.querySelector('.action-resolve').addEventListener('click', this.resolve.bind(this), false);
     this.displayElement.querySelector('.action-edit').addEventListener('click', this.edit.bind(this), false);
     this.displayElement.querySelector('.action-delete').addEventListener('click', this.delete.bind(this), false);
 }
+
+Item.prototype.resolve = async function () {
+    try {
+        // TODO: Replace hardcoded status accordingly
+        const itemData = await httpPost(this.getUpdateUrl(), {
+            "title": this.title,
+            "status": "DONE"
+        });
+        //TODO: Verify response status code and only replace title, if response was success.
+        this.status = "DONE";
+
+    } catch (error) {
+        console.log(error);
+    }
+
+    this.displayElement.querySelector('.panel-icon i').className = "fas " + this.getIconClass();
+};
 
 Item.prototype.edit = function () {
     this.displayElement.innerHTML = this.getEditableHtml();
@@ -264,6 +283,45 @@ Item.prototype.editSave = async function () {
 
 Item.prototype.delete = function () {
     this.itemList.removeItem(this);
+};
+
+Item.prototype.getIconClass = function () {
+    let iconClass = "";
+
+    switch (this.itemType) {
+        case "task":
+            iconClass = (this.status === "DONE") ? "fa-check-square" : "fa-square";
+            break;
+        case "event":
+            iconClass = (this.status === "DONE") ? "fa-calendar-check" : "fa-calendar";
+            break;
+        case "note":
+            iconClass = "fa-file";
+            break;
+        default:
+            this.iconClass = "";
+    }
+
+    return iconClass;
+};
+
+Item.prototype.getUpdateUrl = function () {
+    let updateUrl = "";
+    switch (this.itemType) {
+        case "task":
+            updateUrl = "/api/tasks";
+            break;
+        case "event":
+            updateUrl = "/api/events";
+            break;
+        case "note":
+            updateUrl = "/api/notes";
+            break;
+    }
+
+    updateUrl += "/" + this.itemId;
+
+    return updateUrl;
 };
 
 Item.prototype.getEditableHtml = function () {

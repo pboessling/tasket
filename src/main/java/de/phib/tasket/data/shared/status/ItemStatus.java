@@ -8,8 +8,10 @@ package de.phib.tasket.data.shared.status;
 public enum ItemStatus {
 
     TODO,
-    PLANNED,
-    SELECTED,
-    DONE
+    /*PLANNED,
+    SELECTED,*/
+    DONE,
+    MOVED,
+    CANCELED
 
 }

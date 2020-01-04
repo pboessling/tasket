@@ -2,7 +2,7 @@
 
 ## Planned Improvements
 - Daily Log
-    - Resolve item (change item status to done)
+    - Unresolve item (change item status to todo)
     - Cancel item (change item status to canceled)
     - Move item to other Daily Log (duplicate item and change item status to moved)
     - Refactor itemlist.js
