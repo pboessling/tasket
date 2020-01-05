@@ -82,14 +82,16 @@ function Itemlist(displayElement) {
         }
 
         try {
+            let newStatus = "TODO";
+
             const itemData = await httpPost(addUrl, {
                 "collection": _this.collectionId,
                 "title": _this.addItemInputField.value,
-                "status": "TODO"
+                "status": newStatus
             });
             //TODO: Verify response status code and only insert newTaskElement, if response was success.
             //TODO: Different HTML needed for event, task, note?
-            let newItem = newItemElement(itemData.id, itemData.title, _this.itemType);
+            let newItem = newItemElement(itemData.id, itemData.title, itemData.status, _this.itemType);
             _this.itemListPanel.insertBefore(newItem, _this.addItemButtonPanel);
 
             new Item(newItem, _this);
@@ -120,11 +122,13 @@ function Itemlist(displayElement) {
         _this.itemListPanel.removeChild(item.displayElement);
     };
 
-    function newItemElement(id, title, type) {
+    function newItemElement(id, title, status, type) {
         let newItemElement = document.createElement('a');
         newItemElement.setAttribute('class', 'panel-block item');
         newItemElement.setAttribute('data-item-id', id);
+        newItemElement.setAttribute('data-item-status', status);
 
+        // TODO: Remove and replace usage with getIconClass()?
         let iconClass = "";
         switch (type) {
             case "task":
@@ -170,9 +174,10 @@ function Item(displayElement, itemList) {
     this.parentElement = this.displayElement.parentElement;
     this.itemType = this.parentElement.dataset.itemType;
     this.itemId = this.displayElement.dataset.itemId;
+    this.status = this.displayElement.dataset.itemStatus;
     this.title = this.displayElement.querySelector('.item-title').textContent;
 
-    // TODO: Revove and replace usage with getIconClass().
+    // TODO: Remove and replace usage with getIconClass().
     switch (this.itemType) {
         case "task":
             this.iconClass = "fa-square";
@@ -189,20 +194,27 @@ function Item(displayElement, itemList) {
 
     var _this = this;
 
-    this.displayElement.querySelector('.action-resolve').addEventListener('click', this.resolve.bind(this), false);
+    this.displayElement.querySelector('.action-resolve').addEventListener('click', this.toggleStatus.bind(this), false);
     this.displayElement.querySelector('.action-edit').addEventListener('click', this.edit.bind(this), false);
     this.displayElement.querySelector('.action-delete').addEventListener('click', this.delete.bind(this), false);
 }
 
-Item.prototype.resolve = async function () {
+Item.prototype.toggleStatus = async function () {
+    let newStatus = this.status;
+    if (this.status === "TODO") {
+        newStatus = "DONE";
+    } else if (this.status === "DONE") {
+        newStatus = "TODO";
+    }
+
     try {
         // TODO: Replace hardcoded status accordingly
         const itemData = await httpPost(this.getUpdateUrl(), {
             "title": this.title,
-            "status": "DONE"
+            "status": newStatus
         });
         //TODO: Verify response status code and only replace title, if response was success.
-        this.status = "DONE";
+        this.status = newStatus;
 
     } catch (error) {
         console.log(error);
