@@ -36,3 +36,7 @@ td {
 .with-margin-left {
     margin-left: 0.5rem;
 }
+
+.item.canceled {
+    text-decoration: line-through;
+}

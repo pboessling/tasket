@@ -43,7 +43,7 @@
                         </div>
                     </th:block>
                     <th:block th:unless="${event.id == editTask.id}">
-                        <a class="panel-block item"
+                        <a class="panel-block item" th:classappend="${#strings.toLowerCase(event.status.name())}"
                            th:attr="data-item-id=${event.id},data-item-status=${event.status.name()}">
                             <span class="panel-icon">
                                 <i class="fas" aria-hidden="true"
@@ -95,7 +95,7 @@
                         </div>
                     </th:block>
                     <th:block th:unless="${task.id == editTask.id}">
-                        <a class="panel-block item"
+                        <a class="panel-block item" th:classappend="${#strings.toLowerCase(task.status.name())}"
                            th:attr="data-item-id=${task.id},data-item-status=${task.status.name()}">
                             <span class="panel-icon">
                                 <i class="fas" aria-hidden="true"

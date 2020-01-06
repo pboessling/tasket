@@ -194,12 +194,13 @@ function Item(displayElement, itemList) {
 
     var _this = this;
 
-    this.displayElement.querySelector('.action-resolve').addEventListener('click', this.toggleStatus.bind(this), false);
+    this.displayElement.querySelector('.action-resolve').addEventListener('click', this.toggleResolve.bind(this), false);
+    this.displayElement.querySelector('.action-cancel').addEventListener('click', this.toggleCancel.bind(this), false);
     this.displayElement.querySelector('.action-edit').addEventListener('click', this.edit.bind(this), false);
     this.displayElement.querySelector('.action-delete').addEventListener('click', this.delete.bind(this), false);
 }
 
-Item.prototype.toggleStatus = async function () {
+Item.prototype.toggleResolve = async function () {
     let newStatus = this.status;
     if (this.status === "TODO") {
         newStatus = "DONE";
@@ -221,6 +222,34 @@ Item.prototype.toggleStatus = async function () {
     }
 
     this.displayElement.querySelector('.panel-icon i').className = "fas " + this.getIconClass();
+    this.displayElement.setAttribute("data-item-status", this.status);
+    this.updateItemStyle();
+};
+
+Item.prototype.toggleCancel = async function () {
+    let newStatus = this.status;
+    if (this.status === "CANCELED") {
+        newStatus = "TODO";
+    } else {
+        newStatus = "CANCELED";
+    }
+
+    try {
+        // TODO: Replace hardcoded status accordingly
+        const itemData = await httpPost(this.getUpdateUrl(), {
+            "title": this.title,
+            "status": newStatus
+        });
+        //TODO: Verify response status code and only replace title, if response was success.
+        this.status = newStatus;
+
+    } catch (error) {
+        console.log(error);
+    }
+
+    this.displayElement.querySelector('.panel-icon i').className = "fas " + this.getIconClass();
+    this.displayElement.setAttribute("data-item-status", this.status);
+    this.updateItemStyle();
 };
 
 Item.prototype.edit = function () {
@@ -315,6 +344,11 @@ Item.prototype.getIconClass = function () {
     }
 
     return iconClass;
+};
+
+Item.prototype.updateItemStyle = function () {
+    this.displayElement.classList.remove("todo", "done", "moved", "canceled");
+    this.displayElement.classList.add(this.status.toLowerCase());
 };
 
 Item.prototype.getUpdateUrl = function () {

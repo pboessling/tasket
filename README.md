@@ -30,6 +30,32 @@ TBD
 
 TBD
 
+## Usage
+
+TBD
+
+### URL Patterns
+
+Daily Log:
+```
+/dailylog/2020-01-06
+```
+
+Weekly Log:
+```
+/weeklylog/2020-W01
+```
+
+Monthly Log:
+``` 
+/monthlylog/2020-01
+```
+
+Yearly Log:
+``` 
+/yearlylog/2019
+```
+
 ## Changelog
 
 ### v1.0
