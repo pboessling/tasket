@@ -10,7 +10,6 @@ import java.util.List;
 /**
  * API controller for creating, reading, updating, and deleting collections.
  */
-// TODO: Is this Controller still needed?
 @RestController
 @RequestMapping("/api/collections")
 public class CollectionController {

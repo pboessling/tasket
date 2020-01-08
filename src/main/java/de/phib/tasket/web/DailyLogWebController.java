@@ -1,4 +1,4 @@
-package de.phib.tasket.web.dailylog;
+package de.phib.tasket.web;
 
 import de.phib.tasket.config.InfoAppProperties;
 import de.phib.tasket.data.collection.Collection;
@@ -80,7 +80,7 @@ public class DailyLogWebController {
     @PostMapping(path = "/dailylog")
     public String createDailyLog(/*@RequestBody*/Collection collection) {
         // FIXME: Check, if a collection with the given localDate already exists. If yes, then return a 409 error.
-        this.collectionService.save(collection);
+        this.collectionService.createCollection(collection);
         return "redirect:/dailylog/" + collection.getLocalDate();
     }
 
